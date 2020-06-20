@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Modem Status</title>
+    <style type="text/css">
+    /* CSS styles here... */
+    </style>
+    </head>
+    
+    <body>
+    
+    <center><h1>Modem Status</h1></center>
+    
+    <pre>
+    Allowed     Joined     Linked<br>
+    {% if config["sensor1rssi"] == "not linked" %}
+    9800001         -1         -1
+    {% else %}
+    9800001    9800001    9800001    {{config["sensor1rssi"]}} dB R    0 LQI R    -56 dB F    3 LQI F
+    {% endif %}
+    {% if config["sensor2rssi"] == "not linked" %}
+    9800002         -1         -1
+    {% else %}
+    9800002    9800002    9800002    {{config["sensor2rssi"]}} dB R    3 LQI R    -69 dB F    3 LQI F
+    {% endif %}
+    </pre>
+    
+    </body>
+    
+</html>

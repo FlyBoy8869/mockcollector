@@ -1,0 +1,50 @@
+body {
+	background-color: Linen;
+}
+
+div.subsection {
+	margin-left: 20px;
+}
+
+input {
+	margin-top: 5px;
+	background-color: WhiteSmoke;
+}
+
+input[type="submit"] {
+	border-radius: 10px;
+	margin-left: 20px;
+}
+
+input[type="text"]:hover {
+	background-color: Yellow;
+}
+
+h1.title {
+	text-align: center;
+	text-decoration: underline;
+}
+
+h3.heading {
+	margin-top: 30px;
+	height: 30px;
+	text-indent: 5px;
+	color: WhiteSmoke;
+	background-color: SteelBlue;
+}
+
+h4.subheading {
+	margin-bottom: 5px;
+}
+
+.hidden>div {
+	display: none;
+}
+
+.visible>div {
+	display: block;
+}
+
+.debug {
+	border: 3px dashed red;
+}

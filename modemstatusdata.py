@@ -1,0 +1,47 @@
+class ModemStatusDataGenerator:
+    def __init__(self):
+        self._suffix = "dB R	 0 LQI R	 -56 dB F	 3 LQI F"
+
+    def generate_data(self, serial_numbers, rssi_values):
+        sn_keys = ["serial_1", "serial_2", "serial_3", "serial_4", "serial_5", "serial_6"]
+        rssi_keys = ["rssi_1", "rssi_2", "rssi_3", "rssi_4", "rssi_5", "rssi_6"]
+        data_lines = []
+
+        for sn_key, rssi_key in zip(sn_keys, rssi_keys):
+            if serial_numbers[sn_key] == "0":
+                continue
+            if rssi_values[rssi_key] == "0":
+                data_lines.append(self.generate_non_linked_line(serial_numbers[sn_key]))
+            else:
+                data_lines.append(self.generate_data_line(serial_numbers[sn_key], rssi_values[rssi_key]))
+
+        return tuple(data_lines)
+
+    @staticmethod
+    def generate_serial_number_segment(serial_number):
+        return "".join(serial_number+'\t') * 3
+
+    @staticmethod
+    def append_rssi(text, rssi_value):
+        return text + rssi_value + " "
+
+    @staticmethod
+    def append_suffix(text, suffix):
+        return text + suffix
+
+    def generate_data_line(self, serial, rssi):
+        return self.append_suffix(self.append_rssi(self.generate_serial_number_segment(serial), rssi), self._suffix)
+
+    def generate_non_linked_line(self, serial):
+        return serial + '\t' + "     -1" + '\t' + "     -1"
+
+
+if __name__ == '__main__':
+    from pprint import pprint
+
+    serials = {"sensor1sn": "9800001", "sensor2sn": "9800002", "sensor3sn": "9800003",
+               "sensor4sn": "9800004", "sensor5sn": "9800005", "sensor6sn": "9800006"}
+    rssis = {"sensor1rssi": "-50", "sensor2rssi": "-55", "sensor3rssi": "-60",
+             "sensor4rssi": "-65", "sensor5rssi": "-70", "sensor6rssi": "-75"}
+    obj = ModemStatusDataGenerator(serials, rssis)
+    pprint(obj.generate_data())
