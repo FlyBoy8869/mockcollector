@@ -6,12 +6,12 @@ from typing import Dict, Tuple
 class DataRepository:
     serial_numbers: Dict[str, str] = \
         field(default_factory=lambda: {
-            "serial_1": "9802386",
-            "serial_2": "9802165",
-            "serial_3": "9802316",
-            "serial_4": "9802334",
-            "serial_5": "9802310",
-            "serial_6": "9802193"
+            "serial_1": "0",
+            "serial_2": "0",
+            "serial_3": "0",
+            "serial_4": "0",
+            "serial_5": "0",
+            "serial_6": "0"
         })
 
     rssi_values: Dict[str, str] = \
@@ -81,13 +81,18 @@ class DataRepository:
 
         self.advanced_config_login = req.form.get("advanced_config_login", "")
 
-    def transfer_from_configuration(self, from_data: Dict[str, str], from_keys: Tuple[str, ...]):
-        self.serial_numbers = self._transfer_from_configuration(from_data, tuple(self.serial_numbers.keys()), from_keys)
+    def transfer_from_configuration(self, req, from_keys: Tuple[str, ...]):
+        self._transfer_from_configuration(req, tuple(self.serial_numbers.keys()), from_keys)
 
-    @staticmethod
-    def _transfer_from_configuration(serial_numbers, to_keys: Tuple[str, ...], from_keys: Tuple[str, ...]):
-        serials = {to_key: serial_numbers[from_key] for to_key, from_key in zip(to_keys, from_keys)}
-        return serials
+    def _transfer_from_configuration(self, req, to_keys, from_keys):
+        print("---------------")
+        print(f"to_keys: {to_keys}")
+        print("---------------")
+        print(f"from_keys: {from_keys}")
+        print("---------------")
+        print(f"zipped keys: {list(zip(to_keys, from_keys))}")
+        serials = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
+        self.serial_numbers = serials
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():
@@ -95,26 +100,3 @@ class DataRepository:
                 self.__dict__[value] = "checked"
             else:
                 self.__dict__[value] = ""
-
-
-if __name__ == '__main__':
-    from pprint import pprint
-
-    data = DataRepository()
-
-    serials_dict = {
-        "serial_num_A": "9800001",
-        "serial_num_B": "9800002",
-        "serial_num_C": "9800003",
-        "serial_num_D": "9800004",
-        "serial_num_E": "9800005",
-        "serial_num_F": "9800006"
-    }
-
-    new_serials = data._transfer_from_configuration(serials_dict,
-                                                    tuple(data.serial_numbers.keys()),
-                                                    ("serial_num_A", "serial_num_B", "serial_num_C",
-                                                     "serial_num_D", "serial_num_E", "serial_num_F")
-                                                    )
-
-    pprint(new_serials)

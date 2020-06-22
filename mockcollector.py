@@ -1,4 +1,6 @@
 import os
+import time
+from pprint import pprint
 from typing import List, Tuple
 
 from flask import Flask, render_template, request, url_for, redirect
@@ -8,9 +10,7 @@ from modemstatusdata import ModemStatusDataGenerator
 from rawconfig import RawConfigDataGenerator
 from sensordata import SensorDataGenerator
 
-
 app = Flask(__name__)
-
 data = DataRepository()
 
 print(f"secret_key: {os.environ.get('FLASK_SECRET_KEY')}")
@@ -46,6 +46,7 @@ def index():
 @app.route('/settings', methods=['POST', 'GET'])
 def settings():
     if request.method == 'POST':
+        pprint(request.form)
         data.transfer_from_settings(request)
     
     return render_template('settings.html',
@@ -57,9 +58,10 @@ def settings():
 @app.route('/configuration', methods=['GET', 'POST'])
 def configuration():
     if request.method == 'POST':
-        data.transfer_from_configuration(request.form, ("serial_num_A", "serial_num_B", "serial_num_C",
-                                                        "serial_num_D", "serial_num_E", "serial_num_F")
-                                         )
+        pprint(request.form)
+        data.transfer_from_configuration(request, ("serial_num_A", "serial_num_B", "serial_num_C",
+                                                   "serial_num_D", "serial_num_E", "serial_num_F"))
+        time.sleep(5)
 
     return render_template('configuration.html', serial_numbers=data.serial_numbers)
 
@@ -118,4 +120,4 @@ def raw_config():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
