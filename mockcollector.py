@@ -61,7 +61,6 @@ def configuration():
         pprint(request.form)
         data.transfer_from_configuration(request, ("serial_num_A", "serial_num_B", "serial_num_C",
                                                    "serial_num_D", "serial_num_E", "serial_num_F"))
-        time.sleep(5)
 
     return render_template('configuration.html', serial_numbers=data.serial_numbers)
 
