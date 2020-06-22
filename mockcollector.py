@@ -1,5 +1,6 @@
 import os
 import time
+from threading import Timer
 from pprint import pprint
 from typing import List, Tuple
 
@@ -59,8 +60,11 @@ def settings():
 def configuration():
     if request.method == 'POST':
         pprint(request.form)
-        data.transfer_from_configuration(request, ("serial_num_A", "serial_num_B", "serial_num_C",
-                                                   "serial_num_D", "serial_num_E", "serial_num_F"))
+        data.transfer_from_configuration(
+            request,
+            ("serial_num_A", "serial_num_B", "serial_num_C",
+             "serial_num_D", "serial_num_E", "serial_num_F")
+        )
 
     return render_template('configuration.html', serial_numbers=data.serial_numbers)
 
@@ -119,4 +123,4 @@ def raw_config():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=bool(os.environ.get("MOCKDEBUG", False)))

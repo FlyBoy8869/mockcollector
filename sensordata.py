@@ -1,5 +1,5 @@
 class SensorDataGenerator:
-    _FILLER_DATA = ["FILLER", "FILLER", "FILLER", "FILLER", "FILLER", "FILLER", "FILLER", "FILLER", "FILLER"]
+    _FILLER_DATA = ["FILLER"] * 9
 
     OUT_13800_LOW = ["13876.2", "119.88", "0.9000", "Lagging", "1482.948"] + _FILLER_DATA + ["6.1"]
     OUT_13800_HIGH = ["13813.8", "120.12", "0.9000", "Lagging", "1497.852"] + _FILLER_DATA + ["69.0"]
@@ -9,7 +9,7 @@ class SensorDataGenerator:
     NOMINAL_7200 = ["7200.0", "60.0", "0.9000", "Lagging", "388.80"] + _FILLER_DATA + ["21.7"]
     OUT_7200_HIGH = ["7207.2", "60.06", "0.9000", "Lagging", "390.744"] + _FILLER_DATA + ["69.0"]
 
-    NO_LINK = ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+    NO_LINK = ["N/A"] * 15
 
     _data_combinations = {
         (True, "13800", "LOW"): OUT_13800_LOW,

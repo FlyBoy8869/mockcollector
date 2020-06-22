@@ -1,4 +1,6 @@
+import time
 from dataclasses import dataclass, field
+from threading import Timer
 from typing import Dict, Tuple
 
 
@@ -85,14 +87,11 @@ class DataRepository:
         self._transfer_from_configuration(req, tuple(self.serial_numbers.keys()), from_keys)
 
     def _transfer_from_configuration(self, req, to_keys, from_keys):
-        print("---------------")
-        print(f"to_keys: {to_keys}")
-        print("---------------")
-        print(f"from_keys: {from_keys}")
-        print("---------------")
-        print(f"zipped keys: {list(zip(to_keys, from_keys))}")
+        def save_serials(numbers):
+            self.serial_numbers = serials
+
         serials = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
-        self.serial_numbers = serials
+        Timer(10, save_serials, [serials]).start()
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():
