@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from _url=(0045)http://127.0.0.1/index.php/main/Temperature -->
+<!-- saved from _url=(0045)http://127.0.0.1/index.php/snow_ctrl/config -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>
 
-	Temperature Scale
+	LineWatch-M Website
     </title>
 
     
@@ -88,7 +88,7 @@
 
         <div id="header">
 
-            <a id="logo" href="http://localhost:5000/">
+            <a id="logo" href="/">
 
 				<img src="static/top_logo.gif" alt="Image of Qinetiq company logo" title="Qinetiq North America" border="0">
 
@@ -129,164 +129,58 @@
 
                 <div id="test"></div>
 
-                <h1>Update Temperature Configuration</h1>
-
-<form action="/temperaturescale" method="post" accept-charset="utf-8">
-
-
-
-
-
-
-	<h4>Voltage Temperature Scale 1A</h4>
-
-	<input type="text" name="voltageTempScale1A" value="-0.00012">
-
-
-	<h4>Voltage Temperature Scale 1B</h4>
-
-	<input type="text" name="voltageTempScale1B" value="0">
-
-
-	<h4>Voltage Temperature Scale 1C</h4>
-
-	<input type="text" name="voltageTempScale1C" value="0">
-
-
-	<h4>Voltage Temperature Scale 2A</h4>
-
-	<input type="text" name="voltageTempScale2A" value="0">
-
-
-	<h4>Voltage Temperature Scale 2B</h4>
-
-	<input type="text" name="voltageTempScale2B" value="0">
-
-
-	<h4>Voltage Temperature Scale 2C</h4>
-
-	<input type="text" name="voltageTempScale2C" value="0">
-
-
-
-
-
-	<h4>Voltage Temperature Offset 1A</h4>
-
-	<input type="text" name="voltageTempOffset1A" value="0">
-
-
-	<h4>Voltage Temperature Offset 1B</h4>
-
-	<input type="text" name="voltageTempOffset1B" value="0">
-
-
-	<h4>Voltage Temperature Offset 1C</h4>
-
-	<input type="text" name="voltageTempOffset1C" value="0">
-
-
-	<h4>Voltage Temperature Offset 2A</h4>
-
-	<input type="text" name="voltageTempOffset2A" value="0">
-
-
-	<h4>Voltage Temperature Offset 2B</h4>
-
-	<input type="text" name="voltageTempOffset2B" value="0">
-
-
-	<h4>Voltage Temperature Offset 2C</h4>
-
-	<input type="text" name="voltageTempOffset2C" value="0">
-
-
-
-
-
-	<h4>Current Temperature Scale 1A</h4>
-
-	<input type="text" name="currentTempScale1A" value="0">
-
-
-	<h4>Current Temperature Scale 1B</h4>
-
-	<input type="text" name="currentTempScale1B" value="0">
-
-
-	<h4>Current Temperature Scale 1C</h4>
-
-	<input type="text" name="currentTempScale1C" value="0">
-
-
-	<h4>Current Temperature Scale 2A</h4>
-
-	<input type="text" name="currentTempScale2A" value="0">
-
-
-	<h4>Current Temperature Scale 2B</h4>
-
-	<input type="text" name="currentTempScale2B" value="0">
-
-
-	<h4>Current Temperature Scale 2C</h4>
-
-	<input type="text" name="currentTempScale2C" value="0">
-
-
-
-
-
-	<h4>Current Temperature Offset 1A</h4>
-
-	<input type="text" name="currentTempOffset1A" value="0">
-
-
-	<h4>Current Temperature Offset 1B</h4>
-
-	<input type="text" name="currentTempOffset1B" value="0">
-
-
-	<h4>Current Temperature Offset 1C</h4>
-
-	<input type="text" name="currentTempOffset1C" value="0">
-
-
-	<h4>Current Temperature Offset 2A</h4>
-
-	<input type="text" name="currentTempOffset2A" value="0">
-
-
-	<h4>Current Temperature Offset 2B</h4>
-
-	<input type="text" name="currentTempOffset2B" value="0">
-
-
-	<h4>Current Temperature Offset 2C</h4>
-
-	<input type="text" name="currentTempOffset2C" value="0">
-
-
-
-
+                <h1>Voltage Ride Through</h1>
+<h2>Configuration Settings</h2>
+
+<p>
+This page contains all of the user editable parameters associated with the Voltage Ride Through capability of this collector.
+</p>
+
+<h3>Voltage Ride Through Parameters</h3>
+<form action="/voltageridethrough" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<div>
+	<div class="trow">
+		<div class="tlabel">Parameter</div>
+		<div class="tcell">Value</div>
+
+	</div>
+	<div class="trow">
+		<div class="tlabel">Filter Gain Time Constant (Tau)</div>
+		<div class="tcell"><input type="number" name="GainTimeConstant" value="0.159"></div>
+	</div>
+	<div class="trow">
+		<div class="tlabel">Filter Gain Tolerance (EPS)</div>
+		<div class="tcell"><input type="number" name="GainTolerance" value="0.01"></div>
+	</div>
+	<div class="trow">
+		<div class="tlabel">VRT Turn ON Value</div>
+		<div class="tcell">
+            <input type="number" min=".01" max="1.0" step="0.000000000000001" name="TurnOn" value="0.02">
+        </div>
+	</div>
+	<div class="trow">
+		<div class="tlabel">VRT Turn OFF Value</div>
+		<div class="tcell">
+        	<input type="number" min=".005" max="1.0" step="0.000000000000001" name="TurnOff" value="0.015">
+        </div>
+	</div>
+	<div class="trow">
+		<div class="tlabel">Collector Calibration Factor</div>
+		<div class="tcell"><input type="number" min=".0000000" max="1.0" step="0.000000000000001" name="CollectorCalibration" value="{{ vrt }}"></div>
+	</div>
+
+</div>
 <br><br>
 
-
-
-<h4>Admin Password</h4>
-
-<input type="password" name="password" value="">
-
-
-
-<input type="hidden" name="collector_id" value="9800060">
-
-
-
+<h4>Admin Password</h4><h4>
+<input type="password" name="password">
 <br><br>
 
-<input type="submit" name="submit">
-            </form></div>
+<input type="submit" value="Save Configuration">
+
+
+
+            </h4></form></div>
 
         </div>
 

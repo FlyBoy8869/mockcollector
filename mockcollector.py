@@ -38,7 +38,7 @@ def login_needed():
 def index():
     pages = [
         "settings", "configuration", "modem_status", "raw_config", "temperature_scale", "sensor_data",
-        "software_upgrade"
+        "software_upgrade", "voltage_ride_through"
     ]
 
     return render_template("index.html", links=_make_link_list(pages))
@@ -121,6 +121,14 @@ def raw_config():
                            correction_angle=correction_angle)
 
 
+@app.route('/voltageridethrough', methods=['POST', 'GET'])
+def voltage_ride_through():
+    vrt: float = 0.0000000
+    if request.method == "POST":
+        vrt = request.form["CollectorCalibration"]
+    return render_template("voltage_ride_through.html", vrt=vrt)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=bool(os.environ.get("MOCKDEBUG", False)))
+    app.run(host='0.0.0.0', port=port, debug=bool(os.environ.get("FLASK_DEBUG", False)))

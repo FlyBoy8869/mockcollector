@@ -6,6 +6,8 @@ from typing import Dict, Tuple
 
 @dataclass
 class DataRepository:
+    serial_update_delay: int = 5
+
     serial_numbers: Dict[str, str] = \
         field(default_factory=lambda: {
             "serial_1": "0",
@@ -44,6 +46,8 @@ class DataRepository:
     advanced_config_login: str = ""
 
     def transfer_from_settings(self, req):
+        self.serial_update_delay = req.form["serial_update_delay"]
+
         self.serial_numbers["serial_1"] = req.form["serial_1"]
         self.serial_numbers["serial_2"] = req.form["serial_2"]
         self.serial_numbers["serial_3"] = req.form["serial_3"]
@@ -91,7 +95,7 @@ class DataRepository:
             self.serial_numbers = serials
 
         serials = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
-        Timer(10, save_serials, [serials]).start()
+        Timer(int(self.serial_update_delay), save_serials, [serials]).start()
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():

@@ -25,6 +25,11 @@
     
     <h3 class="heading">- Serial Numbers:</h3>
     <div class="subsection">
+        <h4 class="subheading">- Delay Before Update -</h4>
+        <label for="serial_update_delay">Serial Update Delay (0 - 15 secs): </label>
+        <input type="number" id="serial_update_delay" min="1" max="15" name="serial_update_delay" value="{{ data['serial_update_delay'] }}"><br>
+
+        <h4 class="subheading">- Serial Numbers -</h4>
         <label for="serial_1">Sensor 1:</label>
         <input type="text" id="serial_1" name="serial_1" value="{{serial_numbers['serial_1']}}"><br>
 
@@ -48,7 +53,7 @@
 
     <h3 class="heading">- Linking:</h3>
     <div class="subsection">
-        <h4 class="subheading">- Behaviour -</h5>
+        <h4 class="subheading">- Behaviour -</h4>
         <input type="radio" id="lbSameTime" name="link_behaviour" value="SAME_TIME">
         <label for="lbSameTime">Same Time</label> &#x2502;
 
