@@ -1,10 +1,8 @@
 import os
-import time
-from threading import Timer
 from pprint import pprint
 from typing import List, Tuple
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, Response
 
 from data import DataRepository
 from modemstatusdata import ModemStatusDataGenerator
@@ -23,7 +21,7 @@ def _append_link(links: List[Tuple[str, str]], label: str, url: str):
 
 
 def _make_link_list(pages: List[str]):
-    links: List[Tuple[str, str], ...] = []
+    links: List[Tuple[str, str]] = []
 
     for page in pages:
         _append_link(links, page, url_for(page))
@@ -47,6 +45,7 @@ def index():
 @app.route('/settings', methods=['POST', 'GET'])
 def settings():
     if request.method == 'POST':
+        print("data sent from settings page in 'POST' request.")
         pprint(request.form)
         data.transfer_from_settings(request)
     
@@ -59,6 +58,7 @@ def settings():
 @app.route('/configuration', methods=['GET', 'POST'])
 def configuration():
     if request.method == 'POST':
+        print("data sent from configuration page")
         pprint(request.form)
         data.transfer_from_configuration(
             request,
@@ -66,7 +66,12 @@ def configuration():
              "serial_num_D", "serial_num_E", "serial_num_F")
         )
 
-    return render_template('configuration.html', serial_numbers=data.serial_numbers)
+    if data.collector_power == "ON":
+        print(f"Serial Numbers being sent to the configuration page for '{request.method}' request.")
+        pprint(data.serial_numbers)
+        return render_template('configuration.html', serial_numbers=data.serial_numbers)
+    else:
+        return Response(status=data.off_status_code)
 
 
 modem_data = ModemStatusDataGenerator()

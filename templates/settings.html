@@ -22,97 +22,131 @@
     
     <form action="/settings" method="post">
 
+    <h3 class="heading">- Collector Options -</h3>
+    <div class="subsection">
+        <h4 class="subheading">- Power -</h4>
+        <div class="subheadingcontent">
+            <input type="radio" id="collector_on" name="collector_power" value="ON" {% if data.collector_on_checked %}checked{% endif %}>
+            <label for="collector_on">On</label> &#x2502;
+
+            <input type="radio" id="collector_off" name="collector_power" value="OFF" {% if data.collector_off_checked %}checked{% endif %}>
+            <label for="collector_off">Off</label>
+        </div>
+        <h4 class="subheading">- Response Headers When Powered Off -</h4>
+        <div class="subheadingcontent">
+            <input class="response" type="radio" id="status_code_404" name="off_status_code" value="404" {% if data.status_code_404 %}checked{% endif %}>
+            <label for="status_code_404">404 - Not Found</label> &#x2502;
+
+            <input class="response" type="radio" id="status_code_408" name="off_status_code" value="408" {% if data.status_code_408 %}checked{% endif %}>
+            <label for="status_code_408">408 - Request Timed Out</label>
+        </div>
+    </div>
+
     
     <h3 class="heading">- Serial Numbers:</h3>
     <div class="subsection">
         <h4 class="subheading">- Delay Before Update -</h4>
-        <label for="serial_update_delay">Serial Update Delay (0 - 15 secs): </label>
-        <input type="number" id="serial_update_delay" min="1" max="15" name="serial_update_delay" value="{{ data['serial_update_delay'] }}"><br>
+        <div class="subheadingcontent">
+            <label for="serial_update_delay">Serial Update Delay (0 - 15 secs): </label>
+            <input type="number" id="serial_update_delay" min="1" max="15" name="serial_update_delay" value="{{ data['serial_update_delay'] }}">
+        </div>
 
         <h4 class="subheading">- Serial Numbers -</h4>
-        <label for="serial_1">Sensor 1:</label>
-        <input type="text" id="serial_1" name="serial_1" value="{{serial_numbers['serial_1']}}"><br>
+        <div class="subheadingcontent">
+            <label for="serial_1">Sensor 1:</label>
+            <input type="text" id="serial_1" name="serial_1" value="{{serial_numbers['serial_1']}}"><br>
 
-        <label for="serial_1">Sensor 2:</label>
-        <input type="text" id="serial_2" name="serial_2" value="{{serial_numbers['serial_2']}}"><br>
+            <label for="serial_1">Sensor 2:</label>
+            <input type="text" id="serial_2" name="serial_2" value="{{serial_numbers['serial_2']}}"><br>
 
-        <label for="serial_1">Sensor 3:</label>
-        <input type="text" id="serial_3" name="serial_3" value="{{serial_numbers['serial_3']}}"><br>
+            <label for="serial_1">Sensor 3:</label>
+            <input type="text" id="serial_3" name="serial_3" value="{{serial_numbers['serial_3']}}"><br>
 
-        <label for="serial_1">Sensor 4:</label>
-        <input type="text" id="serial_4" name="serial_4" value="{{serial_numbers['serial_4']}}"><br>
+            <label for="serial_1">Sensor 4:</label>
+            <input type="text" id="serial_4" name="serial_4" value="{{serial_numbers['serial_4']}}"><br>
 
-        <label for="serial_1">Sensor 5:</label>
-        <input type="text" id="serial_5" name="serial_5" value="{{serial_numbers['serial_5']}}"><br>
+            <label for="serial_1">Sensor 5:</label>
+            <input type="text" id="serial_5" name="serial_5" value="{{serial_numbers['serial_5']}}"><br>
 
-        <label for="serial_1">Sensor 6:</label>
-        <input type="text" id="serial_6" name="serial_6" value="{{serial_numbers['serial_6']}}"><br><br>
+            <label for="serial_1">Sensor 6:</label>
+            <input type="text" id="serial_6" name="serial_6" value="{{serial_numbers['serial_6']}}"><br><br>
 
-        {{ "\U0001F449" }}&nbsp<em>Enter '0' to simulate no sensor at that position.</em>
+            {{ "\U0001F449" }}&nbsp<em>Enter '0' to simulate no sensor at that position.</em>
+        </div>
     </div>
 
     <h3 class="heading">- Linking:</h3>
     <div class="subsection">
         <h4 class="subheading">- Behaviour -</h4>
-        <input type="radio" id="lbSameTime" name="link_behaviour" value="SAME_TIME">
-        <label for="lbSameTime">Same Time</label> &#x2502;
+        <div class="subheadingcontent">
+            <input type="radio" id="lbSameTime" name="link_behaviour" value="SAME_TIME">
+            <label for="lbSameTime">Same Time</label> &#x2502;
 
-        <input type="radio" id="lbOneSecondApart" name="link_behaviour" value="ONE_SECOND_APART">
-        <label for="lbOneSecondApart">One Second Apart</label><br>
+            <input type="radio" id="lbOneSecondApart" name="link_behaviour" value="ONE_SECOND_APART">
+            <label for="lbOneSecondApart">One Second Apart</label><br>
+        </div>
 
         <h4 class="subheading">- RSSI values -</h4>
-        <label for="rssi_1">Sensor 1:</label>
-        <input type="text" id="rssi_1" name="rssi_1" value="{{rssi_values['rssi_1']}}"><br>
+        <div class="subheadingcontent">
+            <label for="rssi_1">Sensor 1:</label>
+            <input type="text" id="rssi_1" name="rssi_1" value="{{rssi_values['rssi_1']}}"><br>
 
-        <label for="rssi_2">Sensor 2:</label>
-        <input type="text" id="rssi_2" name="rssi_2" value="{{rssi_values['rssi_2']}}"><br>
+            <label for="rssi_2">Sensor 2:</label>
+            <input type="text" id="rssi_2" name="rssi_2" value="{{rssi_values['rssi_2']}}"><br>
 
-        <label for="rssi_3">Sensor 3:</label>
-        <input type="text" id="rssi_3" name="rssi_3" value="{{rssi_values['rssi_3']}}"><br>
+            <label for="rssi_3">Sensor 3:</label>
+            <input type="text" id="rssi_3" name="rssi_3" value="{{rssi_values['rssi_3']}}"><br>
 
-        <label for="rssi_4">Sensor 4:</label>
-        <input type="text" id="rssi_4" name="rssi_4" value="{{rssi_values['rssi_4']}}"><br>
+            <label for="rssi_4">Sensor 4:</label>
+            <input type="text" id="rssi_4" name="rssi_4" value="{{rssi_values['rssi_4']}}"><br>
 
-        <label for="rssi_5">Sensor 5:</label>
-        <input type="text" id="rssi_5" name="rssi_5" value="{{rssi_values['rssi_5']}}"><br>
+            <label for="rssi_5">Sensor 5:</label>
+            <input type="text" id="rssi_5" name="rssi_5" value="{{rssi_values['rssi_5']}}"><br>
 
-        <label for="rssi_6">Sensor 6:</label>
-        <input type="text" id="rssi_6" name="rssi_6" value="{{rssi_values['rssi_6']}}"><br><br>
+            <label for="rssi_6">Sensor 6:</label>
+            <input type="text" id="rssi_6" name="rssi_6" value="{{rssi_values['rssi_6']}}"><br><br>
 
-        {{ "\U0001F449" }}&nbsp<em>Enter '0' to simulate a non-linking sensor.</em>
+            {{ "\U0001F449" }}&nbsp<em>Enter '0' to simulate a non-linking sensor.</em>
+        </div>
     </div>
 
     <h3 class="heading">- Sensor Data:</h3>
     <div class="subsection">
         <h4 class="subheading">- Tolerance -</h4>
-        <input type="radio" id="tolerance_low" name="tolerance" value="LOW" {% if data.tolerance_low_checked %}checked{% endif %}>
-        <label for="tolerance_low">Low</label> &#x2502;
+        <div class="subheadingcontent">
+            <input type="radio" id="tolerance_low" name="tolerance" value="LOW" {% if data.tolerance_low_checked %}checked{% endif %}>
+            <label for="tolerance_low">Low</label> &#x2502;
 
-        <input type="radio" id="tolerance_nominal" name="tolerance" value="NOMINAL" {% if data.tolerance_nominal_checked %}checked{% endif %}>
-        <label for="tolerance_in">Nominal</label> &#x2502;
+            <input type="radio" id="tolerance_nominal" name="tolerance" value="NOMINAL" {% if data.tolerance_nominal_checked %}checked{% endif %}>
+            <label for="tolerance_in">Nominal</label> &#x2502;
 
-        <input type="radio" id="tolerance_high" name="tolerance" value="HIGH" {% if data.tolerance_high_checked %}checked{% endif %}>
-        <label for="tolerance_out">High</label> &#x2502;
+            <input type="radio" id="tolerance_high" name="tolerance" value="HIGH" {% if data.tolerance_high_checked %}checked{% endif %}>
+            <label for="tolerance_out">High</label> &#x2502;
+        </div>
 
         <h4 class="subheading">- Voltage -</h4>
-        <input type="radio" id="data_high" name="voltage" value="13800" {% if data.high_data_checked %}checked{% endif %}>
-        <label for="data_high">13800 volts</label> &#x2502;
+        <div class="subheadingcontent">
+            <input type="radio" id="data_high" name="voltage" value="13800" {% if data.high_data_checked %}checked{% endif %}>
+            <label for="data_high">13800 volts</label> &#x2502;
 
-        <input type="radio" id="data_low" name="voltage" value="7200" {% if data.low_data_checked %}checked{% endif %}>
-        <label for="data_low">7200 volts</label><br>
+            <input type="radio" id="data_low" name="voltage" value="7200" {% if data.low_data_checked %}checked{% endif %}>
+            <label for="data_low">7200 volts</label><br>
+        </div>
     </div>
 
     <h3 class="heading">- Advanced Configuration:</h3>
     <div class="subsection">
         <h4 class="subheading">- Raw Data -</h4>
-        <input type="radio" id="raw_low" name="raw_tolerance" value="LOW" {% if data.raw_low %}checked{% endif %}>
-        <label for="raw_low">Low</label> &#x2502;
+        <div class="subheadingcontent">
+            <input type="radio" id="raw_low" name="raw_tolerance" value="LOW" {% if data.raw_low %}checked{% endif %}>
+            <label for="raw_low">Low</label> &#x2502;
 
-        <input type="radio" id="raw_nominal" name="raw_tolerance" value="NOMINAL" {% if data.raw_nominal %}checked{% endif %}>
-        <label for="raw_nominal">Nominal</label> &#x2502;        
+            <input type="radio" id="raw_nominal" name="raw_tolerance" value="NOMINAL" {% if data.raw_nominal %}checked{% endif %}>
+            <label for="raw_nominal">Nominal</label> &#x2502;        
 
-        <input type="radio" id="raw_high" name="raw_tolerance" value="HIGH" {% if data.raw_high %}checked{% endif %}>
-        <label for="raw_high">High</label>
+            <input type="radio" id="raw_high" name="raw_tolerance" value="HIGH" {% if data.raw_high %}checked{% endif %}>
+            <label for="raw_high">High</label>
+        </div>
     </div>
 
     <h3 class="heading">- Misc:</h3>

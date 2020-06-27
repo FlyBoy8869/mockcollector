@@ -6,6 +6,14 @@ from typing import Dict, Tuple
 
 @dataclass
 class DataRepository:
+    collector_power: str = "OFF"
+    collector_on_checked: str = ""
+    collector_off_checked: str = "checked"
+
+    off_status_code: str = "404"
+    status_code_404: str = "checked"
+    status_code_408: str = ""
+
     serial_update_delay: int = 5
 
     serial_numbers: Dict[str, str] = \
@@ -46,6 +54,21 @@ class DataRepository:
     advanced_config_login: str = ""
 
     def transfer_from_settings(self, req):
+        self.collector_power = req.form["collector_power"]
+        self.persist_radio_button(self.collector_power,
+                                  {
+                                      "ON": "collector_on_checked",
+                                      "OFF": "collector_off_checked"
+                                  })
+
+        if "off_status_code" in req.form.keys():
+            self.off_status_code = req.form["off_status_code"]
+            self.persist_radio_button(self.off_status_code,
+                                      {
+                                          "404": "status_code_404",
+                                          "408": "status_code_408"
+                                      })
+
         self.serial_update_delay = req.form["serial_update_delay"]
 
         self.serial_numbers["serial_1"] = req.form["serial_1"]
