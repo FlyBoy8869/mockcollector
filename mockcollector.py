@@ -1,16 +1,17 @@
 import os
+import time
 from pprint import pprint
 from typing import List, Tuple
 
 from flask import Flask, render_template, request, url_for, redirect, Response
 
-from data import DataRepository
+from data import data_repository
 from modemstatusdata import ModemStatusDataGenerator
 from rawconfig import RawConfigDataGenerator
 from sensordata import SensorDataGenerator
 
 app = Flask(__name__)
-data = DataRepository()
+data = data_repository
 
 print(f"secret_key: {os.environ.get('FLASK_SECRET_KEY')}")
 
@@ -67,8 +68,10 @@ def configuration():
         )
 
     if data.collector_power == "ON":
-        print(f"Serial Numbers being sent to the configuration page for '{request.method}' request.")
-        pprint(data.serial_numbers)
+        if not data.modem_status_pause:
+            data.modem_status_pause = True
+            data.modem_status_ready = time.time() + int(data.serial_update_delay)
+
         return render_template('configuration.html', serial_numbers=data.serial_numbers)
     else:
         return Response(status=data.off_status_code)
@@ -79,7 +82,15 @@ modem_data = ModemStatusDataGenerator()
 
 @app.route('/modemstatus')
 def modem_status():
-    return render_template('modem_status.html', config=modem_data.generate_data(data.serial_numbers, data.rssi_values))
+    if data.collector_power == "ON" and not data.modem_status_pause:
+        return render_template('modem_status.html',
+                               config=modem_data.generate_data(data.serial_numbers, data.rssi_values)
+                               )
+    elif time.time() >= data.modem_status_ready:
+        data.modem_status_pause = False
+        data.modem_status_ready = 0
+
+    return render_template('modem_status.html', config=modem_data.generate_blank_page())
 
 
 @app.route('/softwareupgrade')

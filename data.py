@@ -1,6 +1,4 @@
-import time
 from dataclasses import dataclass, field
-from threading import Timer
 from typing import Dict, Tuple
 
 
@@ -52,6 +50,9 @@ class DataRepository:
     raw_high: str = ""
 
     advanced_config_login: str = ""
+
+    modem_status_ready: int = 0
+    modem_status_pause: bool = False
 
     def transfer_from_settings(self, req):
         self.collector_power = req.form["collector_power"]
@@ -114,11 +115,7 @@ class DataRepository:
         self._transfer_from_configuration(req, tuple(self.serial_numbers.keys()), from_keys)
 
     def _transfer_from_configuration(self, req, to_keys, from_keys):
-        def save_serials(numbers):
-            self.serial_numbers = serials
-
-        serials = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
-        Timer(int(self.serial_update_delay), save_serials, [serials]).start()
+        self.serial_numbers = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():
@@ -126,3 +123,6 @@ class DataRepository:
                 self.__dict__[value] = "checked"
             else:
                 self.__dict__[value] = ""
+
+
+data_repository = DataRepository()

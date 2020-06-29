@@ -1,3 +1,6 @@
+from data import data_repository
+
+
 class ModemStatusDataGenerator:
     def __init__(self):
         self._suffix = "dB R	 0 LQI R	 -56 dB F	 3 LQI F"
@@ -18,6 +21,10 @@ class ModemStatusDataGenerator:
         return tuple(data_lines)
 
     @staticmethod
+    def generate_blank_page():
+        return tuple([""] * 6)
+
+    @staticmethod
     def generate_serial_number_segment(serial_number):
         return "".join(serial_number+'\t') * 3
 
@@ -34,14 +41,3 @@ class ModemStatusDataGenerator:
 
     def generate_non_linked_line(self, serial):
         return serial + '\t' + "     -1" + '\t' + "     -1"
-
-
-if __name__ == '__main__':
-    from pprint import pprint
-
-    serials = {"sensor1sn": "9800001", "sensor2sn": "9800002", "sensor3sn": "9800003",
-               "sensor4sn": "9800004", "sensor5sn": "9800005", "sensor6sn": "9800006"}
-    rssis = {"sensor1rssi": "-50", "sensor2rssi": "-55", "sensor3rssi": "-60",
-             "sensor4rssi": "-65", "sensor5rssi": "-70", "sensor6rssi": "-75"}
-    obj = ModemStatusDataGenerator(serials, rssis)
-    pprint(obj.generate_data())
