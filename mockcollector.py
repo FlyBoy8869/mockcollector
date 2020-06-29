@@ -37,7 +37,7 @@ def login_needed():
 def index():
     pages = [
         "settings", "configuration", "modem_status", "raw_config", "temperature_scale", "sensor_data",
-        "software_upgrade", "voltage_ride_through"
+        "software_upgrade", "voltage_ride_through", "fault_current"
     ]
 
     return render_template("index.html", links=_make_link_list(pages))
@@ -143,6 +143,11 @@ def voltage_ride_through():
     if request.method == "POST":
         vrt = request.form["CollectorCalibration"]
     return render_template("voltage_ride_through.html", vrt=vrt)
+
+
+@app.route('/faultcurrent')
+def fault_current():
+    return render_template("fault_current.html")
 
 
 if __name__ == "__main__":
