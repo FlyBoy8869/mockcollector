@@ -1,6 +1,3 @@
-from data import data_repository
-
-
 class ModemStatusDataGenerator:
     def __init__(self):
         self._suffix = "dB R	 0 LQI R	 -56 dB F	 3 LQI F"
@@ -11,18 +8,19 @@ class ModemStatusDataGenerator:
         data_lines = []
 
         for sn_key, rssi_key in zip(sn_keys, rssi_keys):
-            if serial_numbers[sn_key] == "0":
-                continue
-            if rssi_values[rssi_key] == "0":
+            if serial_numbers[sn_key] == "0" or rssi_values[rssi_key] == "0":
                 data_lines.append(self.generate_non_linked_line(serial_numbers[sn_key]))
             else:
                 data_lines.append(self.generate_data_line(serial_numbers[sn_key], rssi_values[rssi_key]))
 
         return tuple(data_lines)
 
+    def generate_data_line(self, serial, rssi):
+        return self.append_suffix(self.append_rssi(self.generate_serial_number_segment(serial), rssi), self._suffix)
+
     @staticmethod
     def generate_blank_page():
-        return tuple([""] * 6)
+        return tuple([f" {0:7}\t {-1:7}\t {-1:7}"] * 6)
 
     @staticmethod
     def generate_serial_number_segment(serial_number):
@@ -36,8 +34,6 @@ class ModemStatusDataGenerator:
     def append_suffix(text, suffix):
         return text + suffix
 
-    def generate_data_line(self, serial, rssi):
-        return self.append_suffix(self.append_rssi(self.generate_serial_number_segment(serial), rssi), self._suffix)
-
-    def generate_non_linked_line(self, serial):
-        return serial + '\t' + "     -1" + '\t' + "     -1"
+    @staticmethod
+    def generate_non_linked_line(serial: str) -> str:
+        return f"       {serial}\t      {-1}\t      {-1}"

@@ -9,7 +9,8 @@ class SensorDataGenerator:
     NOMINAL_7200 = ["7200.0", "60.0", "0.9000", "Lagging", "388.80"] + _FILLER_DATA + ["21.7"]
     OUT_7200_HIGH = ["7207.2", "60.06", "0.9000", "Lagging", "390.744"] + _FILLER_DATA + ["69.0"]
 
-    NO_LINK = ["N/A"] * 15
+    # TODO: Replace 'NA' with a constant from LWTest.constants, that doesn't involve PyQt being a dependency.
+    NO_LINK = ['NA'] * 15
 
     _data_combinations = {
         (True, "13800", "LOW"): OUT_13800_LOW,

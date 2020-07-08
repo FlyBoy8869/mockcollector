@@ -12,7 +12,7 @@ input {
 }
 
 input[type="submit"] {
-	border-radius: 10px;
+	border-radius: 8px;
 	margin-left: 20px;
 }
 
@@ -28,10 +28,19 @@ input[type="number"] {
 	padding-left: .4em;
 }
 
+h1.top_graphic_title {
+	padding-top: .5em;
+	padding-left: .5em;
+	text-align: left;
+	color: Linen;
+}
+
 h1.title {
 	text-align: center;
 	text-decoration: underline;
+	color: black;
 }
+
 
 h3.heading {
 	margin-top: 30px;
@@ -67,4 +76,32 @@ h4.subheading {
 	border: 3px dashed red;
 	background-color: lightgray;
 	padding: .5em;
+}
+
+#top-graphic {
+	height: 185px;
+	width: 900px;
+	background-image: url('images/top.jpg')
+}
+
+.nav-button {
+	border-top-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+}
+
+#nav-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: .5em;
+}
+
+#home-main {
+	clear: both;
+	max-width: 899px;
+	margin: auto;
+}
+
+.test_class {
+	background-color: blue;
 }

@@ -30,7 +30,7 @@ def _make_link_list(pages: List[str]):
 
 
 def login_needed():
-    return data.advanced_config_login != ""
+    return data.advanced_config_login != "" and not data.logged_in
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -41,6 +41,14 @@ def index():
     ]
 
     return render_template("index.html", links=_make_link_list(pages))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        data.logged_in = True
+
+    return render_template("login.html")
 
 
 @app.route('/settings', methods=['POST', 'GET'])
@@ -116,7 +124,7 @@ def sensor_data():
 @app.route('/temperaturescale', methods=['POST', 'GET'])
 def temperature_scale():
     if login_needed():
-        return redirect(url_for("settings"))
+        return redirect(url_for("login"))
 
     return render_template("temperature_scale.html")
 
@@ -126,15 +134,19 @@ raw_config_data_generator = RawConfigDataGenerator()
 
 @app.route('/rawconfig', methods=['POST', 'GET'])
 def raw_config():
-    if login_needed():
-        return redirect(url_for("settings"))
+    if data.collector_power == "ON":
 
-    scale_current = raw_config_data_generator.generate_scale_current(data.raw_tolerance)
-    scale_voltage = raw_config_data_generator.generate_scale_voltage(data.raw_tolerance)
-    correction_angle = raw_config_data_generator.generate_correction_angle(data.raw_tolerance)
+        if login_needed():
+            return redirect(url_for("login"))
 
-    return render_template("raw_config.html", scale_current=scale_current, scale_voltage=scale_voltage,
-                           correction_angle=correction_angle)
+        scale_current = raw_config_data_generator.generate_scale_current(data.raw_tolerance)
+        scale_voltage = raw_config_data_generator.generate_scale_voltage(data.raw_tolerance)
+        correction_angle = raw_config_data_generator.generate_correction_angle(data.raw_tolerance)
+
+        return render_template("raw_config.html", scale_current=scale_current, scale_voltage=scale_voltage,
+                               correction_angle=correction_angle)
+    else:
+        return Response(status=0)
 
 
 @app.route('/voltageridethrough', methods=['POST', 'GET'])

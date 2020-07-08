@@ -50,6 +50,7 @@ class DataRepository:
     raw_high: str = ""
 
     advanced_config_login: str = ""
+    logged_in: bool = False
 
     modem_status_ready: int = 0
     modem_status_pause: bool = False
