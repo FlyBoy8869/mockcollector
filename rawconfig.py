@@ -31,14 +31,14 @@ class RawConfigDataGenerator:
         "HIGH": CORRECTION_ANGLE_OUT_HIGH
     }
 
-    def generate_scale_current(self, tolerance: str):
-        return self.scale_current[tolerance]
+    def generate_scale_current(self, tolerance: str, count: int):
+        return self.scale_current[tolerance][0:count]
 
-    def generate_scale_voltage(self, tolerance: str):
-        return self.scale_voltage[tolerance]
+    def generate_scale_voltage(self, tolerance: str, count: int):
+        return self.scale_voltage[tolerance][0:count]
 
-    def generate_correction_angle(self, tolerance: str):
-        return self.correction_angle[tolerance]
+    def generate_correction_angle(self, tolerance: str, count: int):
+        return self.correction_angle[tolerance][0:count]
 
 
 if __name__ == '__main__':

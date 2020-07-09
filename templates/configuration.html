@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "/"; 
+        var base_url = "http://localhost:5000/"; 
 
         
 
@@ -86,17 +86,17 @@
 
     <div id="container">
         <div id="header">
-            <a id="logo" href="/">
+            <a id="logo" href="http://localhost:5000/settings">
             <img src="static/top_logo.gif" alt="Image of Qinetiq company logo" title="Qinetiq North America" border="0">
             </a>
 
             <div id="topNav">
                 <ul>
-                    <li> <a href="http://127.0.0.1/index.php/main/sensordata">Sensor DataReader</a> </li> |
+                    <li> <a href="http://localhost:5000/sensordata">Sensor DataReader</a> </li> |
                     <li> <a href="http://127.0.0.1/index.php/main/powerquality">Power Quality</a> </li> |   
                     <li> <a href="http://127.0.0.1/index.php/fault_viewer">Events</a> </li> |
                     <li> <a href="http://127.0.0.1/index.php/external_comms">Communications</a> </li> |
-                    <li> <a href="http://127.0.0.1/index.php/main/configuration">Configuration</a> </li> |
+                    <li> <a href="http://localhost:5000/configuration">Configuration</a> </li> |
 					<li> <a href="http://127.0.0.1/index.php/dnp3">DNP3</a> </li> |
                     <li> <a href="http://127.0.0.1/index.php/download">Download</a> </li>
                 </ul>
@@ -269,8 +269,8 @@
     <div id="footer">
         <ul>
             <li>Version Release 1009-3.1.0: Factory Defaults</li><br>
-            <li><a href="http://127.0.0.1/index.php/upgrade">Software Upgrade</a> | <a href="http://127.0.0.1/index.php/upgrade/date_and_time">Date and Time</a> | <a href="http://127.0.0.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://127.0.0.1/index.php/main/changepassword/admin">Change Admin Password</a></li><br>
-            <li><a href="http://127.0.0.1/index.php/main/reset">System Reset</a> | <a href="http://127.0.0.1/index.php/main/defaults">Restore Defaults</a> | <a href="http://127.0.0.1/index.php/main/modem_status">Modem Status</a> | <a href="http://127.0.0.1/index.php/log_viewer">Log Files</a></li><br>
+            <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:5000/date_and_time">Date and Time</a> | <a href="http://127.0.0.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://127.0.0.1/index.php/main/changepassword/admin">Change Admin Password</a></li><br>
+            <li><a href="http://127.0.0.1/index.php/main/reset">System Reset</a> | <a href="http://127.0.0.1/index.php/main/defaults">Restore Defaults</a> | <a href="http://localhost:5000/modemstatus">Modem Status</a> | <a href="http://127.0.0.1/index.php/log_viewer">Log Files</a></li><br>
             <li>Copyright © 2012-2019 QinetiQ North America, All Rights Reserved</li><br>
             <li><div id="dataloadtime" style="display:inline"></div></li><br>
         </ul>

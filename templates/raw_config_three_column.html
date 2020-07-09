@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)http://192.168.2.1/index.php/main/viewdata -->
+<!-- saved from url=(0038)http://192.168.2.1/index.php/main/test -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>
@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "http://192.168.2.1/"; 
+        var base_url = "http://localhost:5000/"; 
 
         
 
@@ -230,7 +230,7 @@
 
                         <li> <a href="http://192.168.2.1/index.php/external_comms">Communications</a> </li> |
 
-                        <li> <a href="http://192.168.2.1/index.php/main/configuration">Configuration</a> </li> |
+                        <li> <a href="http://localhost:5000/configuration">Configuration</a> </li> |
 
 						<li> <a href="http://192.168.2.1/index.php/dnp3">DNP3</a> </li> |
 
@@ -253,71 +253,638 @@
 
                 <div id="test"></div>
 
-                <table>
-<tbody><tr><td>
-	<table>
-	<tbody><tr><td><h2 class="h2textfield">Start Date: &nbsp;</h2></td><td><input type="text" name="datestart" id="datestart" value="07/08/2020" class="hasDatepicker"></td></tr>
-	<tr><td><h2 class="h2textfield">End Date: </h2></td><td><input type="text" name="dateend" id="dateend" value="07/08/2020" class="hasDatepicker"></td></tr>
-	</tbody></table>
-</td><td>&nbsp;<h2 class="h2textfield"> <input type="submit" id="updatePlot" name="updatePlot" value="Update Plot"> </h2></td>
-<td> <div class="tblank"></div>	<div class="tblank"></div>	
-<select class="tselectMed" name="interval" id="selectData">
-<option value="cdf">Voltage</option>
-<option value="cbc">Current</option>
-<option value="211">Power Factor</option>
-<option value="9b8">Lead / Lag</option>
-<option value="c67">Real Power</option>
-<option value="6a8">Reactive Power</option>
-<option value="6de">Apparent Power</option>
-<option value="193">Volt Hours</option>
-<option value="7e6">Amp Hours Dlvd</option>
-<option value="267">Amp Hours Rcvd</option>
-<option value="2e1">Real Energy Dlvd</option>
-<option value="650">Real Energy Rcvd</option>
-<option value="28b">Reactive Energy Dlvd</option>
-<option value="d16">Reactive Energy Rcvd</option>
-<option value="029">Temperature</option>
-</select></td></tr></tbody></table>
+                
+<h1>Update Configuration</h1>
 
-<script type="text/javascript">
-	function post(path, params, method) {
-		method = method || "post"; // Set method to post by default if not specified.
+<form action="http://localhost:5000/rawconfig" method="post" accept-charset="utf-8">
 
-		// The rest of this code assumes you are not using a library.
-		// It can be made less wordy if you use one.
-		var form = document.createElement("form");
-		form.setAttribute("method", method);
-		form.setAttribute("action", path);
 
-		for(var key in params) {
-			if(params.hasOwnProperty(key)) {
-				var hiddenField = document.createElement("input");
-				hiddenField.setAttribute("type", "hidden");
-				hiddenField.setAttribute("name", key);
-				hiddenField.setAttribute("value", params[key]);
 
-				form.appendChild(hiddenField);
-			 }
-		}
+<div class="trow">
 
-		document.body.appendChild(form);
-		form.submit();
-	}
+    <div class="tblank"></div>
 
-	document.getElementById('selectData').onchange = function(){
-		var e = document.getElementById("selectData");
-		post("/index.php/main/viewdata/" + e.options[e.selectedIndex].value,{datestart:$("#datestart").val(), dateend:$("#dateend").val()});
-	}
-</script>
+    <div class="tlabelTiny ">Parameter</div>
 
-<div id="dataloadtime" style="width">Data Request Complete 0.482 seconds.</div>	
-<h1> () </h1>
-<div class="tblank"></div><div class="tblank"></div><div id="legendcontainer"><table style="font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(203,75,75);overflow:hidden"></div></div></td><td class="legendLabel">Phase 1</td><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid #0033FF;overflow:hidden"></div></div></td><td class="legendLabel">Phase 2</td><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(77,167,77);overflow:hidden"></div></div></td><td class="legendLabel">Phase 3</td></tr></tbody></table></div>
-<div id="placeholder" style="width: 850px; height: 300px; display: block; padding: 0px; position: relative;"><canvas class="base" width="850" height="300"></canvas><canvas class="overlay" width="850" height="300" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="xAxis x1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:center;left:294px;top:290px;width:283px">01/01 00:00:00</div></div><div class="yAxis y1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:right;top:278px;right:832px;width:18px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:250px;right:832px;width:18px">-0.8</div><div class="tickLabel" style="position:absolute;text-align:right;top:222px;right:832px;width:18px">-0.6</div><div class="tickLabel" style="position:absolute;text-align:right;top:194px;right:832px;width:18px">-0.4</div><div class="tickLabel" style="position:absolute;text-align:right;top:166px;right:832px;width:18px">-0.2</div><div class="tickLabel" style="position:absolute;text-align:right;top:139px;right:832px;width:18px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:111px;right:832px;width:18px">0.2</div><div class="tickLabel" style="position:absolute;text-align:right;top:83px;right:832px;width:18px">0.4</div><div class="tickLabel" style="position:absolute;text-align:right;top:55px;right:832px;width:18px">0.6</div><div class="tickLabel" style="position:absolute;text-align:right;top:27px;right:832px;width:18px">0.8</div><div class="tickLabel" style="position:absolute;text-align:right;top:-1px;right:832px;width:18px">1.0</div></div></div><div class="notice" style="text-align: center; position: relative; left: 10px; top: -200px;"> 
-            No Data Available for Specified Time Period! 
-            </div></div>
-<div id="overview" style="width: 850px; height: 100px; padding: 0px; position: relative;"><canvas class="base" width="850" height="100"></canvas><canvas class="overlay" width="850" height="100" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="xAxis x1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:center;left:294px;top:90px;width:283px">1/1 00:00</div></div><div class="yAxis y1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:right;top:78px;right:832px;width:18px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:58px;right:832px;width:18px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:39px;right:832px;width:18px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:19px;right:832px;width:18px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-1px;right:832px;width:18px">1.0</div></div></div></div>
-            </div>
+    <div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 1</div><div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 2</div><div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 3</div>
+</div>
+
+
+
+<!-- Scale Current -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">Scale Current</div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleCurrent1A" min="0.01" max="0.05" value="{{ scale_current[0] }}">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleCurrent1B" min="0.01" max="0.05" value="{{ scale_current[1] }}">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleCurrent1C" min="0.01" max="0.05" value="{{ scale_current[2] }}">
+        </div>
+
+    
+</div>
+
+
+
+<!-- Scale Voltage -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">Scale Voltage</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="scaleVoltage1A" min="1.0" max="2.0" value="{{ scale_voltage[0] }}">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="scaleVoltage1B" min="1.0" max="2.0" value="{{ scale_voltage[1] }}">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="scaleVoltage1C" min="1.0" max="2.0" value="{{ scale_voltage[2] }}">
+        </div>
+
+    
+</div>
+
+
+
+<!-- Scale Raw Temp -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">Scale Raw Temp</div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleRawTemp1A" value="999999">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleRawTemp1B" value="999999">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" step="0.000000000000001" name="scaleRawTemp1C" value="999999">
+        </div>
+
+    
+</div>
+
+
+
+<!-- Offset Raw Temp -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">Offset Raw Temp</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="offsetRawTemp1A" value="999999">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="offsetRawTemp1B" value="999999">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" step="0.000000000000001" name="offsetRawTemp1C" value="999999">
+        </div>
+
+    
+</div>
+
+
+
+<!-- Feeder Meter Specific Options -->
+
+
+
+
+<!-- Correction Angle -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">Correction Angle</div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" min="-45.0" max="45.0" step="0.000000000000001" name="correctionAngle1A" value="{{ correction_angle[0] }}">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" min="-45.0" max="45.0" step="0.000000000000001" name="correctionAngle1B" value="{{ correction_angle[1] }}">
+        </div>
+
+    
+        <div class="tcell odd">
+
+        <input type="number" class="odd" min="-45.0" max="45.0" step="0.000000000000001" name="correctionAngle1C" value="{{ correction_angle[2] }}">
+        </div>
+
+    
+</div>
+
+
+
+<!-- Correction Voltage Scale -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">Correction Voltage Scale</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5.0" max="200.0" step="0.000000000000001" name="correctionVoltageScale1A" value="120">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5.0" max="200.0" step="0.000000000000001" name="correctionVoltageScale1B" value="120">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5.0" max="200.0" step="0.000000000000001" name="correctionVoltageScale1C" value="120">
+        </div>
+
+    
+</div>
+
+
+
+<!-- 10k Fault Scale -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">10K Fault Scale</div>
+
+    
+    <div class="tcell odd">
+
+    <input type="number" class="odd" min="0.5" max="0.8" step="0.000000000000001" name="fault10kAScale1A" value="999999">
+    </div>
+
+    
+    <div class="tcell odd">
+
+    <input type="number" class="odd" min="0.5" max="0.8" step="0.000000000000001" name="fault10kAScale1B" value="999999">
+    </div>
+
+    
+    <div class="tcell odd">
+
+    <input type="number" class="odd" min="0.5" max="0.8" step="0.000000000000001" name="fault10kAScale1C" value="999999">
+    </div>
+
+    
+</div>
+
+
+
+<!-- 25k Fault Scale -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">25K Fault Scale</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="2.0" max="3.0" step="0.000000000000001" name="fault25kAScale1A" value="999999">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="2.0" max="3.0" step="0.000000000000001" name="fault25kAScale1B" value="999999">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="2.0" max="3.0" step="0.000000000000001" name="fault25kAScale1C" value="999999">
+        </div>
+
+    
+</div>
+
+
+
+<br><br>
+
+
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">Parameter</div>
+
+    <div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 1</div><div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 2</div><div class="thead &lt;?php echo $odd_tag; ?&gt;">Phase 3</div>
+</div>
+
+
+
+<!-- High Current RMS -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">High Current RMS<img src="static/refresh.png" id="refresh" onclick="updateConfig();" height="12" width="12" title="Refresh Values."></div>
+
+    
+
+    
+            <div id="lastA_current" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastB_current" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastC_current" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+    
+      
+
+    </div>
+
+
+
+<!-- High Current RMS Min -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">High Current RMS Min.</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5" max="20" step="1.0" name="highCurrentRMSmin1A" value="7">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5" max="20" step="1.0" name="highCurrentRMSmin1B" value="7">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="5" max="20" step="1.0" name="highCurrentRMSmin1C" value="7">
+        </div>
+
+    
+</div>
+
+
+
+<!-- VCC -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">VCC<img src="static/refresh.png" id="refresh" onclick="updateConfig ();" height="12" width="12" title="Refresh Values."></div>
+
+    
+
+    
+            <div id="lastA_VCC" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastB_VCC" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastC_VCC" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+    
+      
+
+    </div>
+
+
+
+<!-- VCC Min -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">VCC Min.</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCCmin1A" value="47000">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCCmin1B" value="47000">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCCmin1C" value="47000">
+        </div>
+
+    
+</div>
+
+
+
+<!-- VCAP -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny odd">VCAP<img src="static/refresh.png" id="refresh" onclick="updateConfig ();" height="12" width="12" title="Refresh Values."></div>
+
+    
+
+    
+            <div id="lastA_VCAP" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastB_VCAP" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+        
+            <div id="lastC_VCAP" class="tcell bold odd">
+
+            
+    </div>
+
+    
+    
+
+    
+      
+
+    </div>
+
+
+
+<!-- VCAP Min -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabelTiny ">VCAP Min.</div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCAPmin1A" value="48000">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCAPmin1B" value="48000">
+        </div>
+
+    
+        <div class="tcell ">
+
+        <input type="number" class="" min="0" max="65535" name="VCAPmin1C" value="48000">
+        </div>
+
+    
+</div>
+
+
+
+<br><br>
+
+ 
+
+<!-- Enable Voltage Ride Through -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabel odd" style="width: 272px; "> Enable Voltage Ride
+
+        Through</div>
+
+    
+
+    
+            <div class="tcell odd">
+
+        <input type="checkbox" class="odd" name="voltageRideThroughEnable" checked="">
+
+    </div>
+
+    
+    
+
+</div>
+
+<!-- Voltage Ride Through Threshold -->
+
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tlabel " style="width: 272px; "> Voltage Ride Through
+
+        Threshold</div>
+
+    
+
+    
+            <div class="tcell ">
+
+        <input type="number" min=".01" max="1.0" step="0.000000000000001" class="" name="voltageRideThroughThreshold" value="0.02">
+
+    </div>
+
+    
+    
+
+</div>
+
+
+
+
+
+
+
+<br>
+
+
+
+<h1> Clear Database </h1>
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="thead">Clear?</div>
+
+</div>
+
+<div class="trow">
+
+    <div class="tblank"></div>
+
+    <div class="tcell">
+
+        <input type="checkbox" name="cleardatabase">
+
+    </div>
+
+</div>
+
+
+
+<br><br>
+
+
+
+<div id="password">
+
+    <div class="save">
+
+        Admin Password: <input type="password" name="password"><br><br>
+
+        <input type="submit" value="Submit">
+
+    </div>
+
+</div>
+
+
+            </form></div>
 
         </div>
 
@@ -332,7 +899,7 @@
 
                 <br>
 
-                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://192.168.2.1/index.php/upgrade/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
+                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:5000/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
                 </li>
 
                 <br>
@@ -370,4 +937,4 @@
 
     
 
-<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
+</body></html>

@@ -125,5 +125,8 @@ class DataRepository:
             else:
                 self.__dict__[value] = ""
 
+    def sensor_count(self):
+        return len([sensor for sensor in self.serial_numbers.values() if sensor != '0'])
+
 
 data_repository = DataRepository()

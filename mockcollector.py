@@ -114,11 +114,18 @@ sensor_data_generator = SensorDataGenerator()
 @app.route('/sensordata')
 def sensor_data():
     readings = sensor_data_generator.generate_sensor_data(
-        sensor_data_generator.make_key_combinations(data.serial_numbers, data.rssi_values),
+        sensor_data_generator.make_key_combinations(
+            list(data.serial_numbers.values())[0: data.sensor_count()],
+            list(data.rssi_values.values())[0: data.sensor_count()]
+        ),
         data.voltage,
         data.tolerance
     )
-    return render_template("sensor_data.html", readings=readings)
+    if data.sensor_count() <= 3:
+        print(readings)
+        return render_template("sensor_data_three_column.html", readings=readings)
+    else:
+        return render_template("sensor_data.html", readings=readings)
 
 
 @app.route('/temperaturescale', methods=['POST', 'GET'])
@@ -135,16 +142,28 @@ raw_config_data_generator = RawConfigDataGenerator()
 @app.route('/rawconfig', methods=['POST', 'GET'])
 def raw_config():
     if data.collector_power == "ON":
+        count = 3 if data.sensor_count() <= 3 else 6
 
         if login_needed():
             return redirect(url_for("login"))
 
-        scale_current = raw_config_data_generator.generate_scale_current(data.raw_tolerance)
-        scale_voltage = raw_config_data_generator.generate_scale_voltage(data.raw_tolerance)
-        correction_angle = raw_config_data_generator.generate_correction_angle(data.raw_tolerance)
+        scale_current = raw_config_data_generator.generate_scale_current(data.raw_tolerance, count)
+        scale_voltage = raw_config_data_generator.generate_scale_voltage(data.raw_tolerance, count)
+        correction_angle = raw_config_data_generator.generate_correction_angle(data.raw_tolerance, count)
 
-        return render_template("raw_config.html", scale_current=scale_current, scale_voltage=scale_voltage,
-                               correction_angle=correction_angle)
+        if data.sensor_count() <= 3:
+            return render_template(
+                "raw_config_three_column.html",
+                scale_current=scale_current,
+                scale_voltage=scale_voltage,
+                correction_angle=correction_angle
+            )
+        else:
+            return render_template(
+                "raw_config.html",
+                scale_current=scale_current,
+                scale_voltage=scale_voltage,
+                correction_angle=correction_angle)
     else:
         return Response(status=0)
 
@@ -160,6 +179,11 @@ def voltage_ride_through():
 @app.route('/faultcurrent')
 def fault_current():
     return render_template("fault_current.html")
+
+
+@app.route('/calibrate')
+def calibrate():
+    return render_template("not_used.html")
 
 
 if __name__ == "__main__":

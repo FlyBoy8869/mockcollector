@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)http://192.168.2.1/index.php/main/viewdata -->
+<!-- saved from url=(0044)http://192.168.2.1/index.php/main/sensordata -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>
@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "http://192.168.2.1/"; 
+        var base_url = "http://localhost:5000/"; 
 
         
 
@@ -230,7 +230,7 @@
 
                         <li> <a href="http://192.168.2.1/index.php/external_comms">Communications</a> </li> |
 
-                        <li> <a href="http://192.168.2.1/index.php/main/configuration">Configuration</a> </li> |
+                        <li> <a href="http://localhost:5000/configuration">Configuration</a> </li> |
 
 						<li> <a href="http://192.168.2.1/index.php/dnp3">DNP3</a> </li> |
 
@@ -253,70 +253,27 @@
 
                 <div id="test"></div>
 
-                <table>
-<tbody><tr><td>
-	<table>
-	<tbody><tr><td><h2 class="h2textfield">Start Date: &nbsp;</h2></td><td><input type="text" name="datestart" id="datestart" value="07/08/2020" class="hasDatepicker"></td></tr>
-	<tr><td><h2 class="h2textfield">End Date: </h2></td><td><input type="text" name="dateend" id="dateend" value="07/08/2020" class="hasDatepicker"></td></tr>
-	</tbody></table>
-</td><td>&nbsp;<h2 class="h2textfield"> <input type="submit" id="updatePlot" name="updatePlot" value="Update Plot"> </h2></td>
-<td> <div class="tblank"></div>	<div class="tblank"></div>	
-<select class="tselectMed" name="interval" id="selectData">
-<option value="cdf">Voltage</option>
-<option value="cbc">Current</option>
-<option value="211">Power Factor</option>
-<option value="9b8">Lead / Lag</option>
-<option value="c67">Real Power</option>
-<option value="6a8">Reactive Power</option>
-<option value="6de">Apparent Power</option>
-<option value="193">Volt Hours</option>
-<option value="7e6">Amp Hours Dlvd</option>
-<option value="267">Amp Hours Rcvd</option>
-<option value="2e1">Real Energy Dlvd</option>
-<option value="650">Real Energy Rcvd</option>
-<option value="28b">Reactive Energy Dlvd</option>
-<option value="d16">Reactive Energy Rcvd</option>
-<option value="029">Temperature</option>
-</select></td></tr></tbody></table>
+                <table><tbody><tr><td><h2 class="h2textfield">Date:</h2></td><td><input type="text" id="date" name="sensors_date" value="1/1/1970" class="hasDatepicker"></td></tr><tr><td><h2 class="h2textfield">Time:</h2></td><td><input type="text" id="time" name="sensors_time" value="0:00:00"></td></tr></tbody></table><br><br><p>Auto Update: <input type="checkbox" name="autoupdate" id="autoupdate" checked=""></p><div id="progress" style="width: 0.575532px; overflow: hidden;"></div><p></p><div id="data"><div id="data">
+    <div class="trow">
+        <div class="tblank"></div>
+        <div class="tlabelShort"></div>
+        <div class="theadShort">Phase 1</div><div class="theadShort">Phase 2</div><div class="theadShort">Phase 3</div>    </div>
 
-<script type="text/javascript">
-	function post(path, params, method) {
-		method = method || "post"; // Set method to post by default if not specified.
+    <div class="trow">
+    <div class="tblank"></div>
+    <div class="tlabelShort odd">Last Update</div>
+    <div class="tcellShort odd" id="lastA">06/26 18:41</div><div class="tcellShort odd" id="lastB">06/26 18:41</div><div class="tcellShort odd" id="lastC">06/26 18:41</div>    </div>
 
-		// The rest of this code assumes you are not using a library.
-		// It can be made less wordy if you use one.
-		var form = document.createElement("form");
-		form.setAttribute("method", method);
-		form.setAttribute("action", path);
 
-		for(var key in params) {
-			if(params.hasOwnProperty(key)) {
-				var hiddenField = document.createElement("input");
-				hiddenField.setAttribute("type", "hidden");
-				hiddenField.setAttribute("name", key);
-				hiddenField.setAttribute("value", params[key]);
+<div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/cdf"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Voltage<span style="float: right">(Vrms)</span></div><div class="tcellShort">{{ readings[0] }}</div><div class="tcellShort">{{ readings[1] }}</div><div class="tcellShort">{{ readings[2] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/cbc"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Current<span style="float: right">(Arms)</span></div><div class="tcellShort odd">{{ readings[3] }}</div><div class="tcellShort odd">{{ readings[4] }}</div><div class="tcellShort odd">{{ readings[5] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/211"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Power Factor</div><div class="tcellShort">{{ readings[6] }}</div><div class="tcellShort">{{ readings[7] }}</div><div class="tcellShort">{{ readings[8] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/9b8"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Lead / Lag</div><div class="tcellShort odd">{{ readings[9] }}</div><div class="tcellShort odd">{{ readings[10] }}</div><div class="tcellShort odd">{{ readings[11] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/c67"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Real Power<span style="float: right">(kW)</span></div><div class="tcellShort">{{ readings[12] }}</div><div class="tcellShort">{{ readings[13] }}</div><div class="tcellShort">{{ readings[14] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/6a8"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Reactive Power<span style="float: right">(kVAr)</span></div><div class="tcellShort odd">{{ readings[15] }}</div><div class="tcellShort odd">{{ readings[16] }}</div><div class="tcellShort odd">{{ readings[17] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/6de"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Apparent Power<span style="float: right">(kVA)</span></div><div class="tcellShort">{{ readings[18] }}</div><div class="tcellShort">{{ readings[19] }}</div><div class="tcellShort">{{ readings[20] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/193"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Volt Hours<span style="float: right">(kVh)</span></div><div class="tcellShort odd">{{ readings[21] }}</div><div class="tcellShort odd">{{ readings[22] }}</div><div class="tcellShort odd">{{ readings[23] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/7e6"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Amp Hours Dlvd<span style="float: right">(Ah)</span></div><div class="tcellShort">{{ readings[24] }}</div><div class="tcellShort">{{ readings[25] }}</div><div class="tcellShort">{{ readings[26] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/267"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Amp Hours Rcvd<span style="float: right">(Ah)</span></div><div class="tcellShort odd">{{ readings[27] }}</div><div class="tcellShort odd">{{ readings[28] }}</div><div class="tcellShort odd">{{ readings[29] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/2e1"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Real Energy Dlvd<span style="float: right">(kWh)</span></div><div class="tcellShort">{{ readings[30] }}</div><div class="tcellShort">{{ readings[31] }}</div><div class="tcellShort">{{ readings[32] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/650"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Real Energy Rcvd<span style="float: right">(kWh)</span></div><div class="tcellShort odd">{{ readings[33] }}</div><div class="tcellShort odd">{{ readings[34] }}</div><div class="tcellShort odd">{{ readings[35] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/28b"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Reactive Energy Dlvd<span style="float: right">(kVARh)</span></div><div class="tcellShort">{{ readings[36] }}</div><div class="tcellShort">{{ readings[37] }}</div><div class="tcellShort">{{ readings[38] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/d16"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort odd">Reactive Energy Rcvd<span style="float: right">(kVARh)</span></div><div class="tcellShort odd">{{ readings[39] }}</div><div class="tcellShort odd">{{ readings[40] }}</div><div class="tcellShort odd">{{ readings[41] }}</div></div><div class="trow"><div class="tblank"><a href="http://192.168.2.1/index.php/main/viewdata/029"><img src="static/view_sm.jpg" title="Click for time series."></a></div><div class="tlabelShort">Temperature<span style="float: right">(°C)</span></div><div class="tcellShort">{{ readings[42] }}</div><div class="tcellShort">{{ readings[43] }}</div><div class="tcellShort">{{ readings[44] }}</div></div>   
+ 
+<p>
+    <br>
+    * Click <img src="static/view_sm.jpg"> for a time series of any parameter.
+</p>`
+</div><!-- Data Div! -->
+</div><!-- Data Div! -->
 
-				form.appendChild(hiddenField);
-			 }
-		}
-
-		document.body.appendChild(form);
-		form.submit();
-	}
-
-	document.getElementById('selectData').onchange = function(){
-		var e = document.getElementById("selectData");
-		post("/index.php/main/viewdata/" + e.options[e.selectedIndex].value,{datestart:$("#datestart").val(), dateend:$("#dateend").val()});
-	}
-</script>
-
-<div id="dataloadtime" style="width">Data Request Complete 0.482 seconds.</div>	
-<h1> () </h1>
-<div class="tblank"></div><div class="tblank"></div><div id="legendcontainer"><table style="font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(203,75,75);overflow:hidden"></div></div></td><td class="legendLabel">Phase 1</td><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid #0033FF;overflow:hidden"></div></div></td><td class="legendLabel">Phase 2</td><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(77,167,77);overflow:hidden"></div></div></td><td class="legendLabel">Phase 3</td></tr></tbody></table></div>
-<div id="placeholder" style="width: 850px; height: 300px; display: block; padding: 0px; position: relative;"><canvas class="base" width="850" height="300"></canvas><canvas class="overlay" width="850" height="300" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="xAxis x1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:center;left:294px;top:290px;width:283px">01/01 00:00:00</div></div><div class="yAxis y1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:right;top:278px;right:832px;width:18px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:250px;right:832px;width:18px">-0.8</div><div class="tickLabel" style="position:absolute;text-align:right;top:222px;right:832px;width:18px">-0.6</div><div class="tickLabel" style="position:absolute;text-align:right;top:194px;right:832px;width:18px">-0.4</div><div class="tickLabel" style="position:absolute;text-align:right;top:166px;right:832px;width:18px">-0.2</div><div class="tickLabel" style="position:absolute;text-align:right;top:139px;right:832px;width:18px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:111px;right:832px;width:18px">0.2</div><div class="tickLabel" style="position:absolute;text-align:right;top:83px;right:832px;width:18px">0.4</div><div class="tickLabel" style="position:absolute;text-align:right;top:55px;right:832px;width:18px">0.6</div><div class="tickLabel" style="position:absolute;text-align:right;top:27px;right:832px;width:18px">0.8</div><div class="tickLabel" style="position:absolute;text-align:right;top:-1px;right:832px;width:18px">1.0</div></div></div><div class="notice" style="text-align: center; position: relative; left: 10px; top: -200px;"> 
-            No Data Available for Specified Time Period! 
-            </div></div>
-<div id="overview" style="width: 850px; height: 100px; padding: 0px; position: relative;"><canvas class="base" width="850" height="100"></canvas><canvas class="overlay" width="850" height="100" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="xAxis x1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:center;left:294px;top:90px;width:283px">1/1 00:00</div></div><div class="yAxis y1Axis" style="color:#000000"><div class="tickLabel" style="position:absolute;text-align:right;top:78px;right:832px;width:18px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:58px;right:832px;width:18px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:39px;right:832px;width:18px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:19px;right:832px;width:18px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-1px;right:832px;width:18px">1.0</div></div></div></div>
             </div>
 
         </div>
@@ -332,7 +289,7 @@
 
                 <br>
 
-                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://192.168.2.1/index.php/upgrade/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
+                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:5000/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
                 </li>
 
                 <br>

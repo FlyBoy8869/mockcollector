@@ -17,7 +17,7 @@ class SensorDataGenerator:
         (True, "13800", "NOMINAL"): NOMINAL_13800,
         (True, "13800", "HIGH"): OUT_13800_HIGH,
 
-        (False, "13888", "LOW"): NO_LINK,
+        (False, "13800", "LOW"): NO_LINK,
         (False, "13800", "NOMINAL"): NO_LINK,
         (False, "13800", "HIGH"): NO_LINK,
 
@@ -57,7 +57,7 @@ class SensorDataGenerator:
     @staticmethod
     def make_key_combinations(serial_numbers, rssi_values):
         return [True if serial_num != "0" and rssi != "0" else False for serial_num, rssi in
-                zip(serial_numbers.values(), rssi_values.values())]
+                zip(serial_numbers, rssi_values)]
 
     @staticmethod
     def _flatten(sensor_readings):
@@ -82,7 +82,7 @@ class SensorDataGenerator:
     def _generate_high_readings(self, tolerance: str, linked: bool):
         return self._get_readings(linked, "13800", tolerance)
 
-    def _generate_low_readings(self, tolerance: str, linked:bool):
+    def _generate_low_readings(self, tolerance: str, linked: bool):
         return self._get_readings(linked, "7200", tolerance)
 
 
