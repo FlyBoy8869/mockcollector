@@ -12,45 +12,27 @@ class SensorDataGenerator:
     # TODO: Replace 'NA' with a constant from LWTest.constants, that doesn't involve PyQt being a dependency.
     NO_LINK = ['NA'] * 15
 
-    _data_combinations = {
-        (True, "13800", "LOW"): OUT_13800_LOW,
-        (True, "13800", "NOMINAL"): NOMINAL_13800,
-        (True, "13800", "HIGH"): OUT_13800_HIGH,
-
-        (False, "13800", "LOW"): NO_LINK,
-        (False, "13800", "NOMINAL"): NO_LINK,
-        (False, "13800", "HIGH"): NO_LINK,
-
-        (True, "7200", "LOW"): OUT_7200_LOW,
-        (True, "7200", "NOMINAL"): NOMINAL_7200,
-        (True, "7200", "HIGH"): OUT_7200_HIGH,
-
-        (False, "7200", "LOW"): NO_LINK,
-        (False, "7200", "NOMINAL"): NO_LINK,
-        (False, "7200", "HIGH"): NO_LINK
-    }
-
     def generate_sensor_data(self, link_status, high_low: str, tolerance: str):
-        _link_combinations = {
-            (True, "13800", "LOW"): lambda: self._generate_high_readings("LOW", True),
-            (True, "13800", "NOMINAL"): lambda: self._generate_high_readings("NOMINAL", True),
-            (True, "13800", "HIGH"): lambda: self._generate_high_readings("HIGH", True),
+        _link_combinations_to_data = {
+            (True, "13800", "LOW"): self.OUT_13800_LOW,
+            (True, "13800", "NOMINAL"): self.NOMINAL_13800,
+            (True, "13800", "HIGH"): self.OUT_13800_HIGH,
 
-            (False, "13800", "LOW"): lambda: self._generate_high_readings("LOW", False),
-            (False, "13800", "NOMINAL"): lambda: self._generate_high_readings("NOMINAL", False),
-            (False, "13800", "OUT"): lambda: self._generate_high_readings("HIGH", False),
+            (False, "13800", "LOW"): self.NO_LINK,
+            (False, "13800", "NOMINAL"): self.NO_LINK,
+            (False, "13800", "HIGH"): self.NO_LINK,
 
-            (True, "7200", "LOW"): lambda: self._generate_low_readings("LOW", True),
-            (True, "7200", "NOMINAL"): lambda: self._generate_low_readings("NOMINAL", True),
-            (True, "7200", "HIGH"): lambda: self._generate_low_readings("HIGH", True),
+            (True, "7200", "LOW"): self.OUT_7200_LOW,
+            (True, "7200", "NOMINAL"): self.NOMINAL_7200,
+            (True, "7200", "HIGH"): self.OUT_7200_HIGH,
 
-            (False, "7200", "LOW"): lambda: self._generate_low_readings("LOW", False),
-            (False, "7200", "NOMINAL"): lambda: self._generate_low_readings("NOMINAL", False),
-            (False, "7200", "HIGH"): lambda: self._generate_low_readings("HIGH", False),
+            (False, "7200", "LOW"): self.NO_LINK,
+            (False, "7200", "NOMINAL"): self.NO_LINK,
+            (False, "7200", "HIGH"): self.NO_LINK,
         }
         print(f"link status: {link_status}")
         return self._flatten(
-            [_link_combinations[(link_status, high_low, tolerance)]()
+            [_link_combinations_to_data[(link_status, high_low, tolerance)]
                 for link_status in link_status]
         )
 
@@ -63,31 +45,9 @@ class SensorDataGenerator:
     def _flatten(sensor_readings):
         return [reading[index] for index in range(15) for reading in sensor_readings]
 
-    def _get_readings(self, link_status, high_low, tolerance):
-        """
-
-        :param link_status: a boolean indicating a sensor linked or not liked status
-        :param high_low: a string indicating high voltage or low voltage
-        :param tolerance: a string indicating if readings should be in tolerance, out of tolerance or random
-        :return:
-
-        >>> sdg = SensorDataGenerator()
-        >>> sdg._get_readings(True, "13800", "NOMINAL")
-        ['13800.0', '120.0', '0.9000', 'Lagging', '1490.40', 'FILLER', 'FILLER', 'FILLER', \
-'FILLER', 'FILLER', 'FILLER', 'FILLER', 'FILLER', 'FILLER', '21.7']
-
-        """
-        return self._data_combinations[(link_status, high_low, tolerance)]
-
-    def _generate_high_readings(self, tolerance: str, linked: bool):
-        return self._get_readings(linked, "13800", tolerance)
-
-    def _generate_low_readings(self, tolerance: str, linked: bool):
-        return self._get_readings(linked, "7200", tolerance)
-
 
 if __name__ == '__main__':
     from pprint import pprint
 
     sdg = SensorDataGenerator()
-    pprint(sdg.generate_sensor_data([True, False, True, True, False, True], "7200", "IN"))
+    pprint(sdg.generate_sensor_data([True, False, True, True, False, True], "7200", "NOMINAL"))

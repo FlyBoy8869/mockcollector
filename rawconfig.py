@@ -43,5 +43,5 @@ class RawConfigDataGenerator:
 
 if __name__ == '__main__':
     g = RawConfigDataGenerator()
-    print("scale current:", g.generate_scale_current("NOMINAL"))
-    print("scale voltage:", g.generate_scale_voltage("HIGH"))
+    print("scale current:", g.generate_scale_current("NOMINAL", 6))
+    print("scale voltage:", g.generate_scale_voltage("HIGH", 6))
