@@ -1,47 +1,31 @@
-class RawConfigDataGenerator:
-    SCALE_CURRENT_IN = ["0.02500"] * 6
-    SCALE_CURRENT_OUT_HIGH = ["0.02625"] * 6
-    SCALE_CURRENT_OUT_LOW = ["0.02375"] * 6
+from typing import List, Dict
 
-    SCALE_VOLTAGE_IN = ["1.50000"] * 6
-    SCALE_VOLTAGE_OUT_HIGH = ["1.80000"] * 6
-    SCALE_VOLTAGE_OUT_LOW = ["1.20000"] * 6
+scale_current = {
+    "LOW": ["0.02375"] * 6,
+    "NOMINAL": ["0.02500"] * 6,
+    "HIGH": ["0.02625"] * 6
+}
 
-    CORRECTION_ANGLE_IN = ["0.0"] * 6
-    CORRECTION_ANGLE_OUT_HIGH = ["45.0"] * 6
-    CORRECTION_ANGLE_OUT_LOW = ["-45.0"] * 6
+scale_voltage = {
+    "LOW": ["1.20000"] * 6,
+    "NOMINAL": ["1.50000"] * 6,
+    "HIGH": ["1.80000"] * 6
+}
 
-    FILLER = ["FILLER"] * 30
-
-    scale_current = {
-        "LOW": SCALE_CURRENT_OUT_LOW,
-        "NOMINAL": SCALE_CURRENT_IN,
-        "HIGH": SCALE_CURRENT_OUT_HIGH
-    }
-
-    scale_voltage = {
-        "LOW": SCALE_VOLTAGE_OUT_LOW,
-        "NOMINAL": SCALE_VOLTAGE_IN,
-        "HIGH": SCALE_VOLTAGE_OUT_HIGH
-    }
-
-    correction_angle = {
-        "LOW": CORRECTION_ANGLE_OUT_LOW,
-        "NOMINAL": CORRECTION_ANGLE_IN,
-        "HIGH": CORRECTION_ANGLE_OUT_HIGH
-    }
-
-    def generate_scale_current(self, tolerance: str, count: int):
-        return self.scale_current[tolerance][0:count]
-
-    def generate_scale_voltage(self, tolerance: str, count: int):
-        return self.scale_voltage[tolerance][0:count]
-
-    def generate_correction_angle(self, tolerance: str, count: int):
-        return self.correction_angle[tolerance][0:count]
+correction_angle = {
+    "LOW": ["-45.0"] * 6,
+    "NOMINAL": ["0.0"] * 6,
+    "HIGH": ["45.0"] * 6
+}
 
 
-if __name__ == '__main__':
-    g = RawConfigDataGenerator()
-    print("scale current:", g.generate_scale_current("NOMINAL", 6))
-    print("scale voltage:", g.generate_scale_voltage("HIGH", 6))
+def get_scale_currents(scale_currents: Dict[str, List[str]], tolerance: str, count: int) -> List[str]:
+    return scale_currents[tolerance][0:count]
+
+
+def get_scale_voltages(scale_voltages: Dict[str, List[str]], tolerance: str, count: int) -> List[str]:
+    return scale_voltages[tolerance][0:count]
+
+
+def get_correction_angles(correction_angles: Dict[str, List[str]], tolerance: str, count: int) -> List[str]:
+    return correction_angles[tolerance][0:count]

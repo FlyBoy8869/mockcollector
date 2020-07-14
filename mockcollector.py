@@ -5,9 +5,9 @@ from typing import List, Tuple
 
 from flask import Flask, render_template, request, url_for, redirect, Response
 
+import rawconfig
 from data import data_repository
 from modemstatusdata import ModemStatusDataGenerator
-from rawconfig import RawConfigDataGenerator
 from sensordata import SensorDataGenerator
 
 app = Flask(__name__)
@@ -114,7 +114,7 @@ sensor_data_generator = SensorDataGenerator()
 @app.route('/sensordata')
 def sensor_data():
     readings = sensor_data_generator.generate_sensor_data(
-        sensor_data_generator.make_key_combinations(
+        sensor_data_generator.sensor_link_status(
             list(data.serial_numbers.values())[0: data.sensor_count()],
             list(data.rssi_values.values())[0: data.sensor_count()]
         ),
@@ -136,9 +136,6 @@ def temperature_scale():
     return render_template("temperature_scale.html")
 
 
-raw_config_data_generator = RawConfigDataGenerator()
-
-
 @app.route('/rawconfig', methods=['POST', 'GET'])
 def raw_config():
     if data.collector_power == "ON":
@@ -147,9 +144,9 @@ def raw_config():
         if login_needed():
             return redirect(url_for("login"))
 
-        scale_current = raw_config_data_generator.generate_scale_current(data.raw_tolerance, count)
-        scale_voltage = raw_config_data_generator.generate_scale_voltage(data.raw_tolerance, count)
-        correction_angle = raw_config_data_generator.generate_correction_angle(data.raw_tolerance, count)
+        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, count)
+        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, count)
+        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance, count)
 
         if data.sensor_count() <= 3:
             return render_template(
