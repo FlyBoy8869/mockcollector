@@ -12,6 +12,7 @@ class DataRepository:
     status_code_404: str = "checked"
     status_code_408: str = ""
 
+    sensor_count: int = 0
     serial_update_delay: int = 5
 
     serial_numbers: Dict[str, str] = \
@@ -117,6 +118,7 @@ class DataRepository:
 
     def _transfer_from_configuration(self, req, to_keys, from_keys):
         self.serial_numbers = {to_key: req.form[from_key] for to_key, from_key in zip(to_keys, from_keys)}
+        self.sensor_count = self._sensor_count()
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():
@@ -125,8 +127,8 @@ class DataRepository:
             else:
                 self.__dict__[value] = ""
 
-    def sensor_count(self):
-        return len([sensor for sensor in self.serial_numbers.values() if sensor != '0'])
+    def _sensor_count(self):
+        return len([serial_number for serial_number in self.serial_numbers.values() if serial_number != '0'])
 
 
 data_repository = DataRepository()

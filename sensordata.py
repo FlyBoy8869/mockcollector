@@ -1,7 +1,4 @@
-from collections import defaultdict
-
-import time
-from typing import List, Iterable
+from typing import List
 
 
 class SensorDataGenerator:

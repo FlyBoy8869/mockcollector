@@ -115,13 +115,13 @@ sensor_data_generator = SensorDataGenerator()
 def sensor_data():
     readings = sensor_data_generator.generate_sensor_data(
         sensor_data_generator.sensor_link_status(
-            list(data.serial_numbers.values())[0: data.sensor_count()],
-            list(data.rssi_values.values())[0: data.sensor_count()]
+            list(data.serial_numbers.values())[0: data.sensor_count],
+            list(data.rssi_values.values())[0: data.sensor_count]
         ),
         data.voltage,
         data.tolerance
     )
-    if data.sensor_count() <= 3:
+    if data.sensor_count <= 3:
         print(readings)
         return render_template("sensor_data_three_column.html", readings=readings)
     else:
@@ -139,16 +139,16 @@ def temperature_scale():
 @app.route('/rawconfig', methods=['POST', 'GET'])
 def raw_config():
     if data.collector_power == "ON":
-        count = 3 if data.sensor_count() <= 3 else 6
 
         if login_needed():
             return redirect(url_for("login"))
 
-        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, count)
-        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, count)
-        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance, count)
+        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, data.sensor_count)
+        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, data.sensor_count)
+        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance,
+                                                           data.sensor_count)
 
-        if data.sensor_count() <= 3:
+        if data.sensor_count <= 3:
             return render_template(
                 "raw_config_three_column.html",
                 scale_current=scale_current,
