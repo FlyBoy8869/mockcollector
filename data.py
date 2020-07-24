@@ -13,7 +13,7 @@ class DataRepository:
     status_code_408: str = ""
 
     sensor_count: int = 0
-    serial_update_delay: int = 5
+    serial_update_delay: int = 0
 
     serial_numbers: Dict[str, str] = \
         field(default_factory=lambda: {

@@ -178,9 +178,9 @@ def fault_current():
     return render_template("fault_current.html")
 
 
-@app.route('/calibrate')
+@app.route('/calibrate', methods=['POST', 'GET'])
 def calibrate():
-    return render_template("not_used.html")
+    return render_template("calibrate.html")
 
 
 if __name__ == "__main__":
