@@ -143,10 +143,13 @@ def raw_config():
         if login_needed():
             return redirect(url_for("login"))
 
-        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, data.sensor_count)
-        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, data.sensor_count)
-        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance,
-                                                           data.sensor_count)
+        count = 6
+        if len(data.serial_numbers) < 3:
+            count = 3
+
+        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, count)
+        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, count)
+        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance, count)
 
         if data.sensor_count <= 3:
             return render_template(

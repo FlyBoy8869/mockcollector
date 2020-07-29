@@ -37,7 +37,7 @@ class SensorDataGenerator:
         return self._group_by_index(
             [_link_combinations_to_data[(link_status, high_low, tolerance)]
                 for link_status in link_status],
-            15
+            elements_per_list=15
         )
 
     @staticmethod
@@ -53,11 +53,22 @@ class SensorDataGenerator:
                 serial_numbers and rssi_values != "0", False otherwise.
 
         """
-        return [True if serial_num != "0" and rssi != "0" else False for serial_num, rssi in
-                zip(serial_numbers, rssi_values)]
+        count = 0
+        if len(serial_numbers) < 3:
+            count = 3 - len(serial_numbers)
+        elif len(serial_numbers) > 3:
+            count = 6 - len(serial_numbers)
+        for _ in range(count):
+            serial_numbers.append("0")
+            rssi_values.append("0")
+
+        result = [True if serial_num != "0" and rssi != "0" else False for serial_num, rssi in
+                  zip(serial_numbers, rssi_values)]
+
+        return result
 
     @staticmethod
-    def _group_by_index(nested_list: List[List[str]], elements_per_list: int) -> List[str]:
+    def _group_by_index(nested_list: List[List[str]], *, elements_per_list: int) -> List[str]:
         """Groups elements of a nested lists by index.
 
         Args:
