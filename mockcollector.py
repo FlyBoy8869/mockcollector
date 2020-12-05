@@ -92,7 +92,7 @@ modem_data = ModemStatusDataGenerator()
 def modem_status():
     if data.collector_power == "ON" and not data.modem_status_pause:
         return render_template('modem_status.html',
-                               config=modem_data.generate_data(data.serial_numbers, data.rssi_values)
+                               config=modem_data.generate_data(data.serial_numbers, data.rssi_values, data.rssi_no_link)
                                )
     elif time.time() >= data.modem_status_ready:
         data.modem_status_pause = False
@@ -116,7 +116,8 @@ def sensor_data():
     readings = sensor_data_generator.generate_sensor_data(
         sensor_data_generator.sensor_link_status(
             list(data.serial_numbers.values())[0: data.sensor_count],
-            list(data.rssi_values.values())[0: data.sensor_count]
+            list(data.rssi_values.values())[0: data.sensor_count],
+            list(data.rssi_no_link.values())[0: data.sensor_count]
         ),
         data.voltage,
         data.tolerance
@@ -183,6 +184,9 @@ def fault_current():
 
 @app.route('/calibrate', methods=['POST', 'GET'])
 def calibrate():
+    if login_needed():
+        return redirect(url_for("login"))
+
     return render_template("calibrate.html")
 
 

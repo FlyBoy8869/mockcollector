@@ -107,24 +107,36 @@
             <h4 class="subheading">- RSSI values -</h4>
             <div class="subheadingcontent">
                 <label for="rssi_1">Sensor 1:</label>
-                <input type="text" id="rssi_1" name="rssi_1" value="{{rssi_values['rssi_1']}}"><br>
+                <input type="text" id="rssi_1" name="rssi_1" value="{{rssi_values['rssi_1']}}">
+                <input type="checkbox" id="rssi_1_no_link" name="rssi_1_no_link" {% if data.rssi_no_link['rssi_1'] is false %}checked{% endif %}>
+                <label for="rssi_1_no_link">No link</label><br>
 
                 <label for="rssi_2">Sensor 2:</label>
-                <input type="text" id="rssi_2" name="rssi_2" value="{{rssi_values['rssi_2']}}"><br>
+                <input type="text" id="rssi_2" name="rssi_2" value="{{rssi_values['rssi_2']}}">
+                <input type="checkbox" id="rssi_2_no_link" name="rssi_2_no_link" {% if data.rssi_no_link['rssi_2'] is false %}checked{% endif %}>
+                <label for="rssi_2_no_link">No link</label><br>
 
                 <label for="rssi_3">Sensor 3:</label>
-                <input type="text" id="rssi_3" name="rssi_3" value="{{rssi_values['rssi_3']}}"><br>
+                <input type="text" id="rssi_3" name="rssi_3" value="{{rssi_values['rssi_3']}}">
+                <input type="checkbox" id="rssi_3_no_link" name="rssi_3_no_link" {% if data.rssi_no_link['rssi_3'] is false %}checked{% endif %}>
+                <label for="rssi_3_no_link">No link</label><br>
 
                 <label for="rssi_4">Sensor 4:</label>
-                <input type="text" id="rssi_4" name="rssi_4" value="{{rssi_values['rssi_4']}}"><br>
+                <input type="text" id="rssi_4" name="rssi_4" value="{{rssi_values['rssi_4']}}">
+                <input type="checkbox" id="rssi_4_no_link" name="rssi_4_no_link" {% if data.rssi_no_link['rssi_4'] is false %}checked{% endif %}>
+                <label for="rssi_4_no_link">No link</label><br>
 
                 <label for="rssi_5">Sensor 5:</label>
-                <input type="text" id="rssi_5" name="rssi_5" value="{{rssi_values['rssi_5']}}"><br>
+                <input type="text" id="rssi_5" name="rssi_5" value="{{rssi_values['rssi_5']}}">
+                <input type="checkbox" id="rssi_5_no_link" name="rssi_5_no_link" {% if data.rssi_no_link['rssi_5'] is false %}checked{% endif %}>
+                <label for="rssi_5_no_link">No link</label><br>
 
                 <label for="rssi_6">Sensor 6:</label>
-                <input type="text" id="rssi_6" name="rssi_6" value="{{rssi_values['rssi_6']}}"><br><br>
+                <input type="text" id="rssi_6" name="rssi_6" value="{{rssi_values['rssi_6']}}">
+                <input type="checkbox" id="rssi_6_no_link" name="rssi_6_no_link" {% if data.rssi_no_link['rssi_6'] is false %}checked{% endif %}>
+                <label for="rssi_6_no_link">No link</label><br><br>
 
-                {{ "\U0001F449" }}&nbsp;<em>Enter '0' to simulate a non-linking sensor.</em>
+                {{ "\U0001F449" }}&nbsp;<em>Check 'No link' to simulate a non-linking sensor.</em>
             </div>
         </div>
 
@@ -170,10 +182,13 @@
             </div>
         </div>
 
-        <h3 class="heading">- Misc:</h3>
+        <h3 class="heading">- Login Simulation:</h3>
         <div class="subsection">
             <input type="checkbox" id="require_advanced_login" name="advanced_config_login" value="REQUIRED" {% if data.advanced_config_login %}checked{% endif %}>
-            <label for="require_advanced_login">Require login to access 'advanced_config' pages.</label><br>
+            <label for="require_advanced_login">Require login to access 'advanced_config' pages.</label>
+
+            <input type="checkbox" id="clear_login_flag" name="clear_login_flag">
+            <label for="clear_login_flag">Reset Login</label>
         </div>
         <br><input type="submit" value="Submit">
         </form>

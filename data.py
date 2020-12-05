@@ -35,6 +35,16 @@ class DataRepository:
             "rssi_6": "-75"
         })
 
+    rssi_no_link: Dict[str, bool] = \
+        field(default_factory=lambda: {
+            "rssi_1": True,
+            "rssi_2": True,
+            "rssi_3": True,
+            "rssi_4": True,
+            "rssi_5": True,
+            "rssi_6": True
+        })
+
     link_behaviour: str = "SAME_TIME"
     tolerance: str = "NOMINAL"
     tolerance_low_checked: str = ""
@@ -88,6 +98,13 @@ class DataRepository:
         self.rssi_values["rssi_5"] = req.form["rssi_5"]
         self.rssi_values["rssi_6"] = req.form["rssi_6"]
 
+        self.rssi_no_link["rssi_1"] = False if req.form.get("rssi_1_no_link", "") else True
+        self.rssi_no_link["rssi_2"] = False if req.form.get("rssi_2_no_link", "") else True
+        self.rssi_no_link["rssi_3"] = False if req.form.get("rssi_3_no_link", "") else True
+        self.rssi_no_link["rssi_4"] = False if req.form.get("rssi_4_no_link", "") else True
+        self.rssi_no_link["rssi_5"] = False if req.form.get("rssi_5_no_link", "") else True
+        self.rssi_no_link["rssi_6"] = False if req.form.get("rssi_6_no_link", "") else True
+
         self.tolerance = req.form["tolerance"]
         self.persist_radio_button(self.tolerance,
                                   {
@@ -112,6 +129,9 @@ class DataRepository:
                                   })
 
         self.advanced_config_login = req.form.get("advanced_config_login", "")
+
+        if req.form.get("clear_login_flag", ""):
+            self.logged_in = False
 
     def transfer_from_configuration(self, req, from_keys: Tuple[str, ...]):
         self._transfer_from_configuration(req, tuple(self.serial_numbers.keys()), from_keys)

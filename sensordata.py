@@ -41,7 +41,7 @@ class SensorDataGenerator:
         )
 
     @staticmethod
-    def sensor_link_status(serial_numbers: List[str], rssi_values: List[str]) -> List[bool]:
+    def sensor_link_status(serial_numbers: List[str], rssi_values: List[str], rssi_no_link: List[bool]) -> List[bool]:
         """ Makes a list of True/False values based on sensor linking results.
 
         Args:
@@ -62,8 +62,8 @@ class SensorDataGenerator:
             serial_numbers.append("0")
             rssi_values.append("0")
 
-        result = [True if serial_num != "0" and rssi != "0" else False for serial_num, rssi in
-                  zip(serial_numbers, rssi_values)]
+        result = [True if serial_num != "0" and rssi != "0" and no_link else False for serial_num, rssi, no_link in
+                  zip(serial_numbers, rssi_values, rssi_no_link)]
 
         return result
 
