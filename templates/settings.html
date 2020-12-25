@@ -38,18 +38,6 @@
 
                 <input type="radio" id="collector_off" name="collector_power" value="OFF" {% if data.collector_off_checked %}checked{% endif %}>
                 <label for="collector_off">Off</label>
-
-            </div>
-
-            <div id="hide_when_on">
-                <h4 class="subheading">- Response Headers When Powered Off -</h4>
-                <div class="subheadingcontent">
-                    <input class="response" type="radio" id="status_code_404" name="off_status_code" value="404" {% if data.status_code_404 %}checked{% endif %}>
-                    <label for="status_code_404">404 - Not Found</label> &#x2502;
-
-                    <input class="response" type="radio" id="status_code_408" name="off_status_code" value="408" {% if data.status_code_408 %}checked{% endif %}>
-                    <label for="status_code_408">408 - Request Timed Out</label>
-                </div>
             </div>
 
             <br>

@@ -4,13 +4,13 @@ from typing import List
 class SensorDataGenerator:
     _FILLER_DATA = ["FILLER"] * 9
 
-    OUT_13800_LOW = ["13876.2", "119.88", "0.9000", "Lagging", "1482.948"] + _FILLER_DATA + ["6.1"]
-    NOMINAL_13800 = ["13800.0", "120.0", "0.9000", "Lagging", "1490.40"] + _FILLER_DATA + ["21.7"]
-    OUT_13800_HIGH = ["13813.8", "120.12", "0.9000", "Lagging", "1497.852"] + _FILLER_DATA + ["69.0"]
+    OUT_13800_LOW = ["13,876.25", "119.88", "0.9000", "Lagging", "1482.94"] + _FILLER_DATA + ["6.1"]
+    NOMINAL_13800 = ["13,800.00", "120.00", "0.9000", "Lagging", "1490.40"] + _FILLER_DATA + ["21.7"]
+    OUT_13800_HIGH = ["13,813.85", "120.12", "0.9000", "Lagging", "1497.85"] + _FILLER_DATA + ["69.0"]
 
-    OUT_7200_LOW = ["7192.8", "59.94", "0.9000", "Lagging", "386.856"] + _FILLER_DATA + ["6.1"]
-    NOMINAL_7200 = ["7200.0", "60.0", "0.9000", "Lagging", "388.80"] + _FILLER_DATA + ["21.7"]
-    OUT_7200_HIGH = ["7207.2", "60.06", "0.9000", "Lagging", "390.744"] + _FILLER_DATA + ["69.0"]
+    OUT_7200_LOW = ["7,192.85", "59.94", "0.9000", "Lagging", "386.85"] + _FILLER_DATA + ["6.1"]
+    NOMINAL_7200 = ["7,200.00", "60.00", "0.9000", "Lagging", "388.80"] + _FILLER_DATA + ["21.7"]
+    OUT_7200_HIGH = ["7,207.25", "60.06", "0.9000", "Lagging", "390.74"] + _FILLER_DATA + ["69.0"]
 
     # TODO: Replace 'NA' with a constant from LWTest.constants, that doesn't involve PyQt being a dependency.
     NO_LINK = ['NA'] * 15
@@ -34,11 +34,10 @@ class SensorDataGenerator:
             (False, "7200", "NOMINAL"): self.NO_LINK,
             (False, "7200", "HIGH"): self.NO_LINK,
         }
-        return self._group_by_index(
-            [_link_combinations_to_data[(link_status, high_low, tolerance)]
-                for link_status in link_status],
-            elements_per_list=15
-        )
+        d = [_link_combinations_to_data[(link_status, high_low, tolerance)] for link_status in link_status]
+        multiplier = 3 - len(d) if len(d) <= 3 else 6 - len(d)
+        d.extend([SensorDataGenerator.NO_LINK] * multiplier)
+        return self._group_by_index(d, elements_per_list=15)
 
     @staticmethod
     def sensor_link_status(serial_numbers: List[str], rssi_values: List[str], rssi_no_link: List[bool]) -> List[bool]:
@@ -53,12 +52,12 @@ class SensorDataGenerator:
                 serial_numbers and rssi_values != "0", False otherwise.
 
         """
-        count = 0
+        zeros_to_append = 0
         if len(serial_numbers) < 3:
-            count = 3 - len(serial_numbers)
+            zeros_to_append = 3 - len(serial_numbers)
         elif len(serial_numbers) > 3:
-            count = 6 - len(serial_numbers)
-        for _ in range(count):
+            zeros_to_append = 6 - len(serial_numbers)
+        for _ in range(zeros_to_append):
             serial_numbers.append("0")
             rssi_values.append("0")
 

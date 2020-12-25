@@ -4,13 +4,9 @@ from typing import Dict, Tuple
 
 @dataclass
 class DataRepository:
-    collector_power: str = "OFF"
-    collector_on_checked: str = ""
-    collector_off_checked: str = "checked"
-
-    off_status_code: str = "404"
-    status_code_404: str = "checked"
-    status_code_408: str = ""
+    collector_power: str = "ON"
+    collector_on_checked: str = "checked"
+    collector_off_checked: str = ""
 
     sensor_count: int = 0
     serial_update_delay: int = 0
@@ -73,14 +69,6 @@ class DataRepository:
                                       "ON": "collector_on_checked",
                                       "OFF": "collector_off_checked"
                                   })
-
-        if "off_status_code" in req.form.keys():
-            self.off_status_code = req.form["off_status_code"]
-            self.persist_radio_button(self.off_status_code,
-                                      {
-                                          "404": "status_code_404",
-                                          "408": "status_code_408"
-                                      })
 
         self.serial_update_delay = req.form["serial_update_delay"]
 
