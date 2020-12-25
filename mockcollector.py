@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime
 from pprint import pprint
 from typing import List, Tuple
 
@@ -35,9 +36,10 @@ def login_needed():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # names of the function below
     pages = [
         "settings", "configuration", "modem_status", "raw_config", "temperature_scale", "sensor_data",
-        "software_upgrade", "voltage_ride_through", "fault_current"
+        "software_upgrade", "voltage_ride_through", "fault_current", "date_time",
     ]
 
     return render_template("index.html", links=_make_link_list(pages))
@@ -64,6 +66,20 @@ def settings():
                            rssi_values=data.rssi_values)
 
 
+@app.route('/date_time', methods=['GET', 'POST'])
+def date_time():
+    date = "Mon May 22 09:00:30  2000"
+
+    if request.method == 'POST':
+        if date_input := request.form['date']:
+            try:
+                date = datetime.fromisoformat(date_input).ctime()
+            except ValueError:
+                pass
+
+    return render_template('date_time.html', collector_date_time=date)
+
+
 @app.route('/configuration', methods=['GET', 'POST'])
 def configuration():
     if request.method == 'POST':
@@ -82,7 +98,7 @@ def configuration():
 
         return render_template('configuration.html', serial_numbers=data.serial_numbers)
     else:
-        return Response(status=data.off_status_code)
+        return Response(status=404)
 
 
 modem_data = ModemStatusDataGenerator()
@@ -91,9 +107,10 @@ modem_data = ModemStatusDataGenerator()
 @app.route('/modemstatus')
 def modem_status():
     if data.collector_power == "ON" and not data.modem_status_pause:
-        return render_template('modem_status.html',
-                               config=modem_data.generate_data(data.serial_numbers, data.rssi_values, data.rssi_no_link)
-                               )
+        return render_template(
+            'modem_status.html',
+            config=modem_data.generate_data(data.serial_numbers, data.rssi_values, data.rssi_no_link)
+        )
     elif time.time() >= data.modem_status_ready:
         data.modem_status_pause = False
         data.modem_status_ready = 0
@@ -101,9 +118,14 @@ def modem_status():
     return render_template('modem_status.html', config=modem_data.generate_blank_page())
 
 
-@app.route('/softwareupgrade')
+@app.route('/softwareupgrade', methods=['GET', 'POST'])
 def software_upgrade():
     versions = ["0x75" if rssi != "0" else "0x00" for rssi in data.rssi_values.values()]
+    # versions[2] = "0x00"
+
+    if request.method == 'POST':
+        return render_template('software_upgrade.html', versions=versions)
+
     print(versions)
     return render_template('software_upgrade.html', versions=versions)
 
