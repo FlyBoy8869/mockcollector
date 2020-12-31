@@ -36,10 +36,10 @@ def login_needed():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # names of the function below
+    # names of the functions below
     pages = [
         "settings", "configuration", "modem_status", "raw_config", "temperature_scale", "sensor_data",
-        "software_upgrade", "voltage_ride_through", "fault_current", "date_time",
+        "software_upgrade", "voltage_ride_through", "fault_current", "date_and_time",
     ]
 
     return render_template("index.html", links=_make_link_list(pages))
@@ -66,18 +66,21 @@ def settings():
                            rssi_values=data.rssi_values)
 
 
-@app.route('/date_time', methods=['GET', 'POST'])
-def date_time():
-    date = "Mon May 22 09:00:30  2000"
+date = "Mon May 22 09:00:30  2000"
 
-    if request.method == 'POST':
-        if date_input := request.form['date']:
-            try:
-                date = datetime.fromisoformat(date_input).ctime()
-            except ValueError:
-                pass
 
-    return render_template('date_time.html', collector_date_time=date)
+@app.route('/date_and_time', methods=['GET', 'POST'])
+def date_and_time():
+    global date
+    if data.collector_power == 'ON':
+        if request.method == 'POST':
+            if date_input := request.form['date']:
+                try:
+                    date = datetime.fromisoformat(date_input).ctime()
+                except ValueError:
+                    pass
+
+        return render_template('date_and_time.html', collector_date_time=date)
 
 
 @app.route('/configuration', methods=['GET', 'POST'])
@@ -214,4 +217,5 @@ def calibrate():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=bool(os.environ.get("FLASK_DEBUG", False)))
+    debug = bool(os.environ.get("FLASK_DEBUG", False))
+    app.run(host='0.0.0.0', port=port, debug=debug)
