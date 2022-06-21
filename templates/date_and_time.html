@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)http://127.0.0.1:5000/date_time -->
+<!-- saved from url=(0050)http://127.0.0.1:{{ port }}/date_time -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>
@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "http://127.0.0.1:5000/"; 
+        var base_url = "http://127.0.0.1:{{ port }}/";
 
         
 
@@ -88,7 +88,7 @@
 
         <div id="header">
 
-            <a id="logo" href="http://127.0.0.1:5000/settings">
+            <a id="logo" href="http://127.0.0.1:{{ port }}/settings">
 
 				<img src="static/top_logo.gif" alt="Image of Qinetiq company logo" title="Qinetiq North America" border="0">
 
@@ -98,19 +98,19 @@
 
                     <ul>
 
-                        <li> <a href="http://127.0.0.1:5000/sensordata">Sensor Data</a> </li> |   
+                        <li> <a href="http://127.0.0.1:{{ port }}/sensordata">Sensor Data</a> </li> |
 
-                        <li> <a href="http://127.0.0.1:5000/settings">Power Quality</a> </li> |   
+                        <li> <a href="http://127.0.0.1:{{ port }}/settings">Power Quality</a> </li> |
 
-                        <li> <a href="http://127.0.0.1:5000/settings">Events</a> </li> |
+                        <li> <a href="http://127.0.0.1:{{ port }}/settings">Events</a> </li> |
 
-                        <li> <a href="http://127.0.0.1:5000/settings">Communications</a> </li> |
+                        <li> <a href="http://127.0.0.1:{{ port }}/settings">Communications</a> </li> |
 
-                        <li> <a href="http://127.0.0.1:5000/configuration">Configuration</a> </li> |
+                        <li> <a href="http://127.0.0.1:{{ port }}/configuration">Configuration</a> </li> |
 
-						<li> <a href="http://127.0.0.1:5000/settings">DNP3</a> </li> |
+						<li> <a href="http://127.0.0.1:{{ port }}/settings">DNP3</a> </li> |
 
-                        <li> <a href="http://127.0.0.1:5000/settings">Download</a> </li>
+                        <li> <a href="http://127.0.0.1:{{ port }}/settings">Download</a> </li>
 
                     </ul>
 
@@ -136,11 +136,11 @@
 <h2>Current System Date and Time</h2>
 
 <div class="big">{{ collector_date_time }}
- <a href="http://127.0.0.1:5000/date_time">(refresh)</a></div>
+ <a href="http://127.0.0.1:{{ port }}/date_time">(refresh)</a></div>
 
 <br><br>
 
-<form action="http://127.0.0.1:5000/date_time" method="post" accept-charset="utf-8">
+<form action="http://127.0.0.1:{{ port }}/date_time" method="post" accept-charset="utf-8">
 
 
 <h3>Date and Time:</h3>
@@ -183,14 +183,14 @@
 
                 <br>
 
-                <li><a href="http://127.0.0.1:5000/softwareupgrade">Software Upgrade</a> | <a href="http://127.0.0.1:5000/date_time">Date and Time</a> | <a href="http://127.0.0.1:5000/settings">Change User Password</a> | <a href="http://127.0.0.1:5000/settings">Change Admin Password</a>
+                <li><a href="http://127.0.0.1:{{ port }}/softwareupgrade">Software Upgrade</a> | <a href="http://127.0.0.1:{{ port }}/date_time">Date and Time</a> | <a href="http://127.0.0.1:{{ port }}/settings">Change User Password</a> | <a href="http://127.0.0.1:{{ port }}/settings">Change Admin Password</a>
                 </li>
 
                 <br>
 
                 <li>
 
-                    <a href="http://127.0.0.1:5000/settings">System Reset</a> | <a href="http://127.0.0.1:5000/settings">Restore Defaults</a> | <a href="http://127.0.0.1:5000/modemstatus">Modem Status</a> | <a href="http://127.0.0.1:5000/settings">Log Files</a>
+                    <a href="http://127.0.0.1:{{ port }}/settings">System Reset</a> | <a href="http://127.0.0.1:{{ port }}/settings">Restore Defaults</a> | <a href="http://127.0.0.1:{{ port }}/modemstatus">Modem Status</a> | <a href="http://127.0.0.1:{{ port }}/settings">Log Files</a>
                 </li>
 
                 <br>

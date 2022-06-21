@@ -130,10 +130,7 @@ class DataRepository:
 
     def persist_radio_button(self, state, state_to_member):
         for key, value in state_to_member.items():
-            if state == key:
-                self.__dict__[value] = "checked"
-            else:
-                self.__dict__[value] = ""
+            self.__dict__[value] = "checked" if state == key else ""
 
     def _sensor_count(self):
         return len([serial_number for serial_number in self.serial_numbers.values() if serial_number != '0'])

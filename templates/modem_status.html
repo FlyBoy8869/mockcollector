@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "http://localhost:5000/";
+        var base_url = "http://localhost:{{ port }}/";
 
         
 
@@ -88,7 +88,7 @@
 
         <div id="header">
 
-            <a id="logo" href="http://localhost:5000">
+            <a id="logo" href="http://localhost:{{ port }}">
 
 				<img src="static/top_logo.gif" alt="Image of Qinetiq company logo" title="Qinetiq North America" border="0">
 
@@ -98,19 +98,19 @@
 
                     <ul>
 
-                        <li> <a href="http://localhost:5000/sensordata">Sensor DataReader</a> </li> |
+                        <li> <a href="http://localhost:{{ port }}/sensordata">Sensor DataReader</a> </li> |
 
-                        <li> <a href="http://localhost:5000/settings">Power Quality</a> </li> |   
+                        <li> <a href="http://localhost:{{ port }}/settings">Power Quality</a> </li> |
 
-                        <li> <a href="http://localhost:5000/settings">Events</a> </li> |
+                        <li> <a href="http://localhost:{{ port }}/settings">Events</a> </li> |
 
-                        <li> <a href="http://localhost:5000/settings">Communications</a> </li> |
+                        <li> <a href="http://localhost:{{ port }}/settings">Communications</a> </li> |
 
-                        <li> <a href="http://localhost:5000/configuration">Configuration</a> </li> |
+                        <li> <a href="http://localhost:{{ port }}/configuration">Configuration</a> </li> |
 
-						<li> <a href="http://localhost:5000/settings">DNP3</a> </li> |
+						<li> <a href="http://localhost:{{ port }}/settings">DNP3</a> </li> |
 
-                        <li> <a href="http://localhost:5000/settings">Download</a> </li>
+                        <li> <a href="http://localhost:{{ port }}/settings">Download</a> </li>
 
                     </ul>
 
@@ -156,14 +156,14 @@ RF Chan: 0x3
 
                 <br>
 
-                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:5000/settings">Date and Time</a> | <a href="http://localhost:5000/settings">Change User Password</a> | <a href="http://localhost:5000/settings">Change Admin Password</a>
+                <li><a href="http://localhost:{{ port }}/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:{{ port }}/settings">Date and Time</a> | <a href="http://localhost:{{ port }}/settings">Change User Password</a> | <a href="http://localhost:{{ port }}/settings">Change Admin Password</a>
                 </li>
 
                 <br>
 
                 <li>
 
-                    <a href="http://localhost:5000/settings">System Reset</a> | <a href="http://localhost:5000/settings">Restore Defaults</a> | <a href="http://localhost:5000/modemstatus">Modem Status</a> | <a href="http://localhost:5000/settings">Log Files</a>
+                    <a href="http://localhost:{{ port }}/settings">System Reset</a> | <a href="http://localhost:{{ port }}/settings">Restore Defaults</a> | <a href="http://localhost:{{ port }}/modemstatus">Modem Status</a> | <a href="http://localhost:{{ port }}/settings">Log Files</a>
                 </li>
 
                 <br>

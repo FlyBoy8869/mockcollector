@@ -67,7 +67,7 @@
 
         0;
 
-        var base_url = "http://localhost:5000/"; 
+        var base_url = "http://localhost:{{ port }}/";
 
         
 
@@ -88,7 +88,7 @@
 
         <div id="header">
 
-            <a id="logo" href="http://localhost:5000/settings">
+            <a id="logo" href="http://localhost:{{ port }}/settings">
 
 				<img src="static/top_logo.gif" alt="Image of Qinetiq company logo" title="Qinetiq North America" border="0">
 
@@ -98,7 +98,7 @@
 
                     <ul>
 
-                        <li> <a href="http://localhost:5000/sensordata">Sensor Data</a> </li> |   
+                        <li> <a href="http://localhost:{{ port }}/sensordata">Sensor Data</a> </li> |
 
                         <li> <a href="http://192.168.2.1/index.php/main/powerquality">Power Quality</a> </li> |   
 
@@ -106,7 +106,7 @@
 
                         <li> <a href="http://192.168.2.1/index.php/external_comms">Communications</a> </li> |
 
-                        <li> <a href="http://localhost:5000/configuration">Configuration</a> </li> |
+                        <li> <a href="http://localhost:{{ port }}/configuration">Configuration</a> </li> |
 
 						<li> <a href="http://192.168.2.1/index.php/dnp3">DNP3</a> </li> |
 
@@ -132,7 +132,7 @@
                 
 <h1>Update Configuration</h1>
 
-<form action="http://localhost:5000/rawconfig" method="post" accept-charset="utf-8">
+<form action="http://localhost:{{ port }}/rawconfig" method="post" accept-charset="utf-8">
 
 
 
@@ -775,14 +775,14 @@
 
                 <br>
 
-                <li><a href="http://localhost:5000/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:5000/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
+                <li><a href="http://localhost:{{ port }}/softwareupgrade">Software Upgrade</a> | <a href="http://localhost:{{ port }}/date_and_time">Date and Time</a> | <a href="http://192.168.2.1/index.php/main/changepassword/user">Change User Password</a> | <a href="http://192.168.2.1/index.php/main/changepassword/admin">Change Admin Password</a>
                 </li>
 
                 <br>
 
                 <li>
 
-                    <a href="http://192.168.2.1/index.php/main/reset">System Reset</a> | <a href="http://192.168.2.1/index.php/main/defaults">Restore Defaults</a> | <a href="http://localhost:5000/modemstatus">Modem Status</a> | <a href="http://192.168.2.1/index.php/log_viewer">Log Files</a>
+                    <a href="http://192.168.2.1/index.php/main/reset">System Reset</a> | <a href="http://192.168.2.1/index.php/main/defaults">Restore Defaults</a> | <a href="http://localhost:{{ port }}/modemstatus">Modem Status</a> | <a href="http://192.168.2.1/index.php/log_viewer">Log Files</a>
                 </li>
 
                 <br>

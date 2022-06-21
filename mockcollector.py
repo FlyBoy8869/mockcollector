@@ -1,3 +1,4 @@
+import contextlib
 import os
 import time
 from datetime import datetime
@@ -10,6 +11,8 @@ import rawconfig
 from data import data_repository
 from modemstatusdata import ModemStatusDataGenerator
 from sensordata import SensorDataGenerator
+
+PORT = 6969
 
 app = Flask(__name__)
 data = data_repository
@@ -42,7 +45,7 @@ def index():
         "software_upgrade", "voltage_ride_through", "fault_current", "date_and_time",
     ]
 
-    return render_template("index.html", links=_make_link_list(pages))
+    return render_template("index.html", links=_make_link_list(pages), port=PORT)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,7 +53,7 @@ def login():
     if request.method == 'POST':
         data.logged_in = True
 
-    return render_template("login.html")
+    return render_template("login.html", port=PORT)
 
 
 @app.route('/settings', methods=['POST', 'GET'])
@@ -60,10 +63,13 @@ def settings():
         pprint(request.form)
         data.transfer_from_settings(request)
     
-    return render_template('settings.html',
-                           data=data,
-                           serial_numbers=data.serial_numbers,
-                           rssi_values=data.rssi_values)
+    return render_template(
+        'settings.html',
+        data=data,
+        serial_numbers=data.serial_numbers,
+        rssi_values=data.rssi_values,
+        port=PORT
+    )
 
 
 date = "Mon May 22 09:00:30  2000"
@@ -75,12 +81,9 @@ def date_and_time():
     if data.collector_power == 'ON':
         if request.method == 'POST':
             if date_input := request.form['date']:
-                try:
+                with contextlib.suppress(ValueError):
                     date = datetime.fromisoformat(date_input).ctime()
-                except ValueError:
-                    pass
-
-        return render_template('date_and_time.html', collector_date_time=date)
+        return render_template('date_and_time.html', collector_date_time=date, port=PORT)
 
 
 @app.route('/configuration', methods=['GET', 'POST'])
@@ -94,14 +97,13 @@ def configuration():
              "serial_num_D", "serial_num_E", "serial_num_F")
         )
 
-    if data.collector_power == "ON":
-        if not data.modem_status_pause:
-            data.modem_status_pause = True
-            data.modem_status_ready = time.time() + int(data.serial_update_delay)
-
-        return render_template('configuration.html', serial_numbers=data.serial_numbers)
-    else:
+    if data.collector_power != "ON":
         return Response(status=404)
+    if not data.modem_status_pause:
+        data.modem_status_pause = True
+        data.modem_status_ready = time.time() + int(data.serial_update_delay)
+
+    return render_template('configuration.html', serial_numbers=data.serial_numbers, port=PORT)
 
 
 modem_data = ModemStatusDataGenerator()
@@ -112,13 +114,14 @@ def modem_status():
     if data.collector_power == "ON" and not data.modem_status_pause:
         return render_template(
             'modem_status.html',
-            config=modem_data.generate_data(data.serial_numbers, data.rssi_values, data.rssi_no_link)
+            config=modem_data.generate_data(data.serial_numbers, data.rssi_values, data.rssi_no_link),
+            port=PORT
         )
     elif time.time() >= data.modem_status_ready:
         data.modem_status_pause = False
         data.modem_status_ready = 0
 
-    return render_template('modem_status.html', config=modem_data.generate_blank_page())
+    return render_template('modem_status.html', config=modem_data.generate_blank_page(), port=PORT)
 
 
 @app.route('/softwareupgrade', methods=['GET', 'POST'])
@@ -127,10 +130,10 @@ def software_upgrade():
     # versions[2] = "0x00"
 
     if request.method == 'POST':
-        return render_template('software_upgrade.html', versions=versions)
+        return render_template('software_upgrade.html', versions=versions, port=PORT)
 
     print(versions)
-    return render_template('software_upgrade.html', versions=versions)
+    return render_template('software_upgrade.html', versions=versions, port=PORT)
 
 
 sensor_data_generator = SensorDataGenerator()
@@ -147,11 +150,10 @@ def sensor_data():
         data.voltage,
         data.tolerance
     )
-    if data.sensor_count <= 3:
-        print(readings)
-        return render_template("sensor_data_three_column.html", readings=readings)
-    else:
-        return render_template("sensor_data.html", readings=readings)
+    if data.sensor_count > 3:
+        return render_template("sensor_data.html", readings=readings, port=PORT)
+    print(readings)
+    return render_template("sensor_data_three_column.html", readings=readings, port=PORT)
 
 
 @app.route('/temperaturescale', methods=['POST', 'GET'])
@@ -159,39 +161,37 @@ def temperature_scale():
     if login_needed():
         return redirect(url_for("login"))
 
-    return render_template("temperature_scale.html")
+    return render_template("temperature_scale.html", port=PORT)
 
 
 @app.route('/rawconfig', methods=['POST', 'GET'])
 def raw_config():
-    if data.collector_power == "ON":
-
-        if login_needed():
-            return redirect(url_for("login"))
-
-        count = 6
-        if len(data.serial_numbers) < 3:
-            count = 3
-
-        scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, count)
-        scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, count)
-        correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance, count)
-
-        if data.sensor_count <= 3:
-            return render_template(
-                "raw_config_three_column.html",
-                scale_current=scale_current,
-                scale_voltage=scale_voltage,
-                correction_angle=correction_angle
-            )
-        else:
-            return render_template(
-                "raw_config.html",
-                scale_current=scale_current,
-                scale_voltage=scale_voltage,
-                correction_angle=correction_angle)
-    else:
+    if data.collector_power != "ON":
         return Response(status=0)
+    if login_needed():
+        return redirect(url_for("login"))
+
+    count = 3 if len(data.serial_numbers) < 3 else 6
+    scale_current = rawconfig.get_scale_currents(rawconfig.scale_current, data.raw_tolerance, count)
+    scale_voltage = rawconfig.get_scale_voltages(rawconfig.scale_voltage, data.raw_tolerance, count)
+    correction_angle = rawconfig.get_correction_angles(rawconfig.correction_angle, data.raw_tolerance, count)
+
+    if data.sensor_count <= 3:
+        return render_template(
+            "raw_config_three_column.html",
+            scale_current=scale_current,
+            scale_voltage=scale_voltage,
+            correction_angle=correction_angle,
+            port=PORT
+        )
+    else:
+        return render_template(
+            "raw_config.html",
+            scale_current=scale_current,
+            scale_voltage=scale_voltage,
+            correction_angle=correction_angle,
+            port=PORT
+        )
 
 
 @app.route('/voltageridethrough', methods=['POST', 'GET'])
@@ -199,12 +199,12 @@ def voltage_ride_through():
     vrt: float = 0.0000000
     if request.method == "POST":
         vrt = request.form["CollectorCalibration"]
-    return render_template("voltage_ride_through.html", vrt=vrt)
+    return render_template("voltage_ride_through.html", vrt=vrt, port=PORT)
 
 
 @app.route('/faultcurrent')
 def fault_current():
-    return render_template("fault_current.html")
+    return render_template("fault_current.html", port=PORT)
 
 
 @app.route('/calibrate', methods=['POST', 'GET'])
@@ -212,10 +212,10 @@ def calibrate():
     if login_needed():
         return redirect(url_for("login"))
 
-    return render_template("calibrate.html")
+    return render_template("calibrate.html", port=PORT)
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", PORT))
     debug = bool(os.environ.get("FLASK_DEBUG", False))
     app.run(host='0.0.0.0', port=port, debug=debug)
